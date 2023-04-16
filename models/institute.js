@@ -10,6 +10,9 @@ const instituteSchema = new Schema({
         type: String,
         required: true,
     },
+    bio:{
+        type: String,
+    },
     address:{
         addressId:{
             type: Schema.Types.ObjectId,
@@ -17,12 +20,20 @@ const instituteSchema = new Schema({
             ref: 'Address'
         }
     },
+    imageUrl: {
+        type: String,
+    },
     contact:{
         contactId:{
             type: Schema.Types.ObjectId,
             required: true,
             ref: 'Contact'
         }
+    },
+    instituteList:{
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'instituteList'
     },
     user:{
         userId: {
