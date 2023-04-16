@@ -1,0 +1,92 @@
+<%-include(`../includes/start.ejs`)%> 
+<main class="mainFormContainer">
+    <h1>Get Started With Mascot</h1>
+    <section class="formSection">
+        <div class="formImgContainer">
+            <img src="/images/connected-world.png" alt="connected-world">
+        </div>
+        <div class="formContainer card">
+            <% if(user.role === "student") {%>
+                <form action="/details" id="detailForm" method="post">
+                    <div class="twoInput">
+                        <input type="text" class="firstName" id="firstName" placeholder="First Name">
+                        <input type="text" class="lastName" id="lastName" placeholder="Last Name">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="age" id="age" placeholder="Age">
+                        <input type="date" class="dob" id="dob" placeholder="Date Of Birth">
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="address" id="address" placeholder="Address">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="pin-code" id="pin-code" placeholder="Pin-Code">
+                        
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="institute" id="institute" placeholder="Institute">
+                    </div>
+                    <div class="oneInput">
+                        <textarea name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio"></textarea>
+                    </div>
+                    <small id="errorPara" style="color: red;"></small>
+                    <button type="button" class="submitButton" id="detailButton">Submit</button>
+                </form>
+            <% } else if(user.role === "alumni") {%>
+                <form action="/details" id="detailForm" method="post">
+                    <div class="twoInput">
+                        <input type="text" class="firstName" id="firstName" placeholder="First Name">
+                        <input type="text" class="lastName" id="lastName" placeholder="Last Name">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="age" id="age" placeholder="Age">
+                        <input type="date" class="dob" id="dob" placeholder="Date Of Birth">
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="address" id="address" placeholder="Address">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="pin-code" id="pin-code" placeholder="Pin-Code">
+                        
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="workplace" id="workplace" placeholder="Workplace">
+                    </div>
+                    <div class="oneInput">
+                        <textarea name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio"></textarea>
+                    </div>
+                    <small id="errorPara" style="color: red;"></small>
+                    <button type="button" class="submitButton" id="detailButton">Submit</button>
+                </form>
+            <% }else{ %>
+                <form action="/details" id="detailForm" method="post">
+                    <div class="twoInput">
+                        <input type="text" class="firstName" id="firstName" placeholder="First Name">
+                        <input type="text" class="lastName" id="lastName" placeholder="Last Name">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="age" id="age" placeholder="Age">
+                        <input type="date" class="dob" id="dob" placeholder="Date Of Birth">
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="address" id="address" placeholder="Address">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="pin-code" id="pin-code" placeholder="Pin-Code">
+                        
+                    </div>
+                    <div class="oneInput">
+                        <input type="text" class="institute" id="institute" placeholder="Institute/Workplace">
+                    </div>
+                    <div class="oneInput">
+                        <textarea name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio"></textarea>
+                    </div>
+                    <small id="errorPara" style="color: red;"></small>
+                    <button type="button" class="submitButton" id="detailButton">Submit</button>
+                </form>
+            <% } %>
+        </div>
+    </section>
+</main>
+<script src="/scripts/details.js"></script>
+<%-include(`../includes/end.ejs`)%> 

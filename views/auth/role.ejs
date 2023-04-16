@@ -1,0 +1,20 @@
+<%-include(`../includes/start.ejs`)%>
+<div class="emailTemplate" style="height: 100vh;display: flex; align-items: center; justify-content: center; flex-direction: column; color: white;">
+    <img src="/logo/logo.png" alt="logo" style="height: 100px; width: 100px;">
+    <div class="emailCard" style="display: flex; align-items: center; justify-content: center; flex-direction: column;background: #1b2730; padding: 2rem; border-radius: 10px;">
+        <img src="/images/role.png" alt="authentication" style="height: 200px; width: 200px;">
+        <h3>Find Who You are?</h3>
+        <form action="/role" method="post" style="display: flex; flex-direction: column; width: 100%; gap: 0.5rem;">
+            <label for="role" style="width: 100%; text-align: center; margin-top: 1rem;">Select your role</label>
+            <select name="role" id="role" class="role" style="width: 100%; padding: 0.5rem 1rem; cursor: pointer;">
+                <option value="alumni">Alumni</option>
+                <option value="student">Student</option>
+                <option value="institute">Institute</option>
+            </select>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <button type = 'submit' class="submitButton" style="width: 100%;">Next</button>
+        </form>
+    </div>
+</div>
+<%-include(`../includes/end.ejs`)%>

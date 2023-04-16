@@ -1,0 +1,9 @@
+node_modules
+
+test
+tests
+test.*
+tests.*
+
+
+database.*

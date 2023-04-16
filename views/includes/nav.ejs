@@ -1,0 +1,106 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container custom-container">
+      <div class="custom-brand">
+        <a href="#" class="navbar-brand">
+          <img src="/logo/logo.png" alt="mascot" class="logoImg">
+        </a>
+        <form class="d-flex justify-content-center  align-items-center form-inline my-2 my-lg-0 form-explore mr-auto" role="search" style="gap: 0.3rem;">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="#Explore"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+      <button
+        class="navbar-toggler togglerButton"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#navbarOffcanvas"
+        aria-controls="navbarOffcanvas"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="offcanvas offcanvas-end bg-secondary canvas-color"
+        id="navbarOffcanvas"
+        tabindex="-1"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title text-light" id="offcanvasNavbarLabel">
+            Mascot
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <a class="nav-item nav-link active" aria-current="page" href="/home"
+              ><i class="fa-solid fa-house"></i> Home</a
+            >
+            <a class="nav-item nav-link" href="/network"><i class="fa-solid fa-user-group"></i> My Networks</a>
+            <a class="nav-item nav-link" href="/jobs"><i class="fa-solid fa-briefcase"></i> Jobs</a>
+            <a class="nav-item nav-link" href="/messages"><i class="fa-solid fa-message"></i> Messaging</a>
+            <a class="nav-item nav-link" href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                My Profile
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">
+                  <div class="userProfile">
+                    <div class="profileImgPost">
+                      <img
+                        src="/images/picture.jpeg"
+                        alt="profileImg"
+                      />
+                    </div>
+                    <div class="userInfo">
+                      <h5>Random Name</h5>
+                      <p>IIITS | CSE | 2025</p>
+                    </div>
+                  </div>
+                  <button class="text-button button-w100">
+                    View Profile
+                  </button>
+                </a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><strong class="dropdown-padding" style="font-weight: 500; color: lightslategray;">Account</strong></li>
+                <li><a class="dropdown-item" href="#">Settings & Privacy</a></li>
+                <li><a class="dropdown-item" href="#">Help</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><strong class="dropdown-padding" style="font-weight: 500; color: lightslategray;">Manage</strong></li>
+                <li><a class="dropdown-item" href="#">Posts & Activity</a></li>
+                <li><a class="dropdown-item" href="#">Job Posting Account</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="dropdown-item">Signout</button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

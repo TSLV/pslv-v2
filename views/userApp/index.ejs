@@ -1,0 +1,180 @@
+<%-include(`../includes/start.ejs`)%> 
+<nav class="navbar navbar-expand-lg">
+    <div class="container custom-container">
+      <div class="custom-brand">
+        <a href="#" class="navbar-brand">
+          <img src="/logo/logo.png" alt="mascot" class="logoImg">
+        </a>
+        <form class="d-flex justify-content-center  align-items-center form-inline my-2 my-lg-0 form-explore mr-auto" role="search" style="gap: 0.3rem;">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="#Explore"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+      <button
+        class="navbar-toggler togglerButton"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#navbarOffcanvas"
+        aria-controls="navbarOffcanvas"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="offcanvas offcanvas-end bg-secondary canvas-color"
+        id="navbarOffcanvas"
+        tabindex="-1"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title text-light" id="offcanvasNavbarLabel">
+            Mascot
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="navbar-nav justify-content-end flex-grow-1 pe-3" style="gap: 0.5rem;">
+            <a class="nav-item nav-link" href="/login"><i class="fa-regular fa-compass"></i></i> Discover</a>
+            <a class="nav-item nav-link" href="/login"><i class="fa-solid fa-user-group"></i> People</a>
+            <a class="nav-item nav-link" href="/login"><i class="fa-brands fa-youtube"></i> Learning</a>
+            <a class="nav-item nav-link" href="/login"><i class="fa-solid fa-briefcase"></i> Jobs</a>
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="/login">
+                    <button type="button" class="btn btn-info">Login</button>
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main style="display: flex; flex-direction: column; gap: 1rem; width: 70%; margin: 0 auto; margin-bottom: 1rem; color: white;">
+    <!-- <h1 style="text-align: center;">Find Who You Are?</h1>
+    <div class="landCard">
+      <div class="card">
+        <h3 style="text-align: center;">Student</h3>
+        <img src="/images/connected-world.png" alt="img" style="width: 250px;">
+        <a href="/login" style="text-align: center;">
+          <button type="button" class="btn btn-info" style="width: 100%;">Login</button>
+        </a>
+      </div>
+      <div class="card">
+        <h3 style="text-align: center;">Alumni</h3>
+        <img src="/images/connected-world.png" alt="img" style="width: 250px;">
+        <a href="/login" style="text-align: center;">
+          <button type="button" class="btn btn-info" style="width: 100%;">Login</button>
+        </a>
+      </div>
+      <div class="card">
+        <h3 style="text-align: center;">Institute</h3>
+        <img src="/images/connected-world.png" alt="img" style="width: 250px;">
+        <a href="/login" style="text-align: center;">
+          <button type="button" class="btn btn-info" style="width: 100%;">Login</button>
+        </a>
+      </div>
+    </div> -->
+    <div class="card landCard">
+        <div>
+            <h1 style="margin-bottom: 1rem;">Welcome to your professional Community</h1>
+            Mascot is a social media platform designed for professional networking, job searching, and career development. Its main purpose is to connect professionals from all industries and provide a platform for them to showcase their skills, experiences, and accomplishments.
+            <br>
+            <br>
+            Mascot allows users to create a profile that functions as a digital resume, including details such as work history, education, skills, and recommendations. Users can connect with other professionals in their field, join industry-specific groups, and follow companies they're interested in.
+            <br>
+            <br>
+            Mascot also offers job search functionality, allowing users to search for job postings and apply for positions directly through the platform. Additionally, Mascot provides a variety of educational resources, such as courses and articles, to help users develop new skills and advance their careers.
+            <br>
+            <br>
+            Overall, Mascot serves as a valuable tool for professionals to build their personal brand, expand their network, and find new career opportunities.
+        </div>
+        <div class="imgSide">
+            <img src="/images/Discussion-amico.png" alt="randomImg" width="500px" height="500px">
+        </div>
+    </div>
+    <div class="landCard">
+        <div>
+            <h1>Find the right job or internship for you</h1>
+        </div>
+        <div>
+            <h3 style="margin-bottom: 1rem;">Suggested Searches</h3>
+            <div style="display: flex; flex-direction: row; gap: 1rem; flex-wrap: wrap;">
+                <button class="filled-button">Engineering</button>
+                <button class="filled-button">Full stack developer</button>
+                <button class="filled-button">Backend developer</button>
+                <button class="filled-button">Frontend developer</button>
+                <button class="filled-button">Android developer</button>
+                <button class="filled-button">Software Engineer</button>
+                <button class="filled-button">Finance</button>
+                <button class="filled-button">Business Development</button>
+                <button class="filled-button">Operations</button>
+                <button class="filled-button">Human Resources</button>
+            </div>
+        </div>
+    </div>
+    <div class="landCard card">
+        <div>
+            <h1>Post your job for millions of people to see</h1>
+        </div>
+        <div>
+            <button class="text-button">Post a job</button>
+        </div>
+    </div>
+    <div class="landCard">
+        <div>
+            <h3 style="margin-bottom: 1rem;">Conversations today could lead to opportunity tomorrow</h3>
+            <p>Sending messages to people you know is a great way to strengthen relationships as you take the next step in your career.</p>
+        </div>
+        <div class="imgSide">
+            <img src="/images/Metrics-amico.png" alt="randomImg" width="300px" height="300px">
+        </div>
+    </div>
+    <div class="landCard">
+        <div class="landHelp card">
+            <img src="/images/Helping a partner-pana.png" alt="randomImg" width="400px" height="400px">
+            <h3>Connect with people who can help</h3>
+            <button class="filled-button">Find People you know</button>
+        </div>
+        <div class="landHelp card">
+            <img src="/images/Working-amico.png" alt="randomImg" width="400px" height="400px">
+            <h3>Learn the skills you need to succeed</h3>
+            <button class="filled-button">Learn</button>
+        </div>
+    </div>
+    <div class="landCard">
+        <div class="landHelp">
+            <h1>Who is Mascot for?</h1>
+            <h2>Any student who wants to navigate to their professional life</h2>
+            <div class="card" style="box-shadow: 4px 4px 5px 1px black; cursor: pointer;">
+                Find a coworker, colleague or classmate
+            </div>
+            <div class="card" style="box-shadow: 4px 4px 5px 1px black; cursor: pointer;">
+                Find an internship
+            </div>
+            <div class="card" style="box-shadow: 4px 4px 5px 1px black; cursor: pointer;">
+                Find a job & referrals
+            </div>
+        </div>
+        <div>
+            <img src="/images/Profile data-amico.png" alt="randomImg" width="400px" height="400px">
+        </div>
+    </div>
+  </main>
+  <footer class="landFooter">
+    <p>Mascot &copy; 2023. All rights reserved</p>
+  </footer>
+<%-include(`../includes/end.ejs`)%> 

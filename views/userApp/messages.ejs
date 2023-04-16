@@ -1,0 +1,100 @@
+<%-include(`../includes/start.ejs`)%> 
+<%-include(`../includes/nav.ejs`)%> 
+  <main class="mainChatContainer">
+    <div class="leftChatContent card">
+      <div class="chatList">
+        <div class="chatListHeader">
+          <h5>Messaging</h5>
+          <i class="fa-regular fa-pen-to-square"></i>
+        </div>
+        <div class="searchChat">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="search messages">
+        </div>
+        <div class="friendList">
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+          <div class="chatPerson">
+            <img src="/images/example-person3.jpeg" alt="personImg">
+            <strong>Random Name</strong>
+            <small></small>
+            <small></small>
+          </div>
+        </div>
+      </div>
+      <div id="chat-window">
+        <div id="chat-header">
+          <img
+            src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
+            alt="profileImg" class="profileImg"
+          />
+          <h2>Tushar</h2>
+        </div>
+        <div id="chat-body">
+          <div class="message received">
+            <p>Hello! How are you doing?</p>
+            <span class="timestamp">10:30 AM</span>
+          </div>
+          <div class="message sent">
+            <p>Hi, I'm doing well. Thanks for asking!</p>
+            <span class="timestamp">10:32 AM</span>
+          </div>
+          <div class="message received">
+            <p>That's great to hear!</p>
+            <span class="timestamp">10:34 AM</span>
+          </div>
+        </div>
+        <div id="chat-footer">
+          <input id="input" type="text" placeholder="Type your message..." />
+          <button id="send-btn">
+            <i class="fa-sharp fa-solid fa-paper-plane"></i> Send
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="rightChatContent">
+      <%-include(`../includes/footer.ejs`)%> 
+    </div>
+  </main>
+<script src="/media/scripts/message.js"></script>
+<%-include(`../includes/end.ejs`)%> 
