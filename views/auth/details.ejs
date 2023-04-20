@@ -7,6 +7,8 @@
         </div>
         <div class="formContainer card">
             <% if(role === "student") {%>
+
+
                 <form action="/details" id="detailForm" method="post">
                     <div class="twoInput">
                         <input type="text" class="firstName" name="firstName" placeholder="First Name" required>
@@ -52,6 +54,8 @@
                     <input type="hidden" name="userId" value="<%= userId %>">
                     <input type="hidden" name="role" value="<%= role %>">
                     <button type="submit" class="submitButton" id="detailButton">Submit</button>
+
+                    
                 </form>
             <% } %>
         </div>
