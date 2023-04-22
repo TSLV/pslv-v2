@@ -91,84 +91,51 @@
         </div>
       </div>
     </div>
-    <div class="card">
-      <div class="userProfile">
-        <div class="profileImgPost">
-          <img
-            src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
-            alt="profileImg"
-          />
+    <% if (posts.length > 0) { %>
+      <% for (let post of posts) { %>
+        <div class="card">
+          <div class="userProfile">
+            <div class="profileImgPost">
+              <img
+                src="<%= post.user.imageUrl %>"
+                alt="profileImg"
+              />
+            </div>
+            <div class="userInfo">
+              <h5><%= post.user.firstname %> <%= post.user.lastname %></h5>
+              <p><%= post.user.bio %></p>
+            </div>
+          </div>
+          <div class="caption">
+            <p><%= post.caption %></p>
+          </div>
+          <div class="imagePost">
+            <img
+              src="<%= post.imageUrl %>"
+              alt="post"
+            />
+          </div>
+          <div class="actionBar">
+            <div class="specialLink">
+              <a href="#"><i class="fa-regular fa-thumbs-up"></i> Like</a>
+            </div>
+            <div class="specialLink">
+              <a href="#"><i class="fa-regular fa-comment"></i> Comment</a>
+            </div>
+            <div class="specialLink">
+              <a href="#"
+                ><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</a
+              >
+            </div>
+            <div class="specialLink">
+              <a href="#"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</a>
+            </div>
+          </div>
         </div>
-        <div class="userInfo">
-          <h5>Tushar Pathak</h5>
-          <p>IIITS | CSE | 2025</p>
-        </div>
-      </div>
-      <div class="caption">
-        <p>This is the kind of impact we want in our life</p>
-      </div>
-      <div class="imagePost">
-        <img
-          src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210310114057/web-development-image.png"
-          alt="post"
-        />
-      </div>
-      <div class="actionBar">
-        <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-thumbs-up"></i> Like</a>
-        </div>
-        <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-comment"></i> Comment</a>
-        </div>
-        <div class="specialLink">
-          <a href="#"
-            ><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</a
-          >
-        </div>
-        <div class="specialLink">
-          <a href="#"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</a>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="userProfile">
-        <div class="profileImgPost">
-          <img
-            src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
-            alt="profileImg"
-          />
-        </div>
-        <div class="userInfo">
-          <h5>Tushar Pathak</h5>
-          <p>IIITS | CSE | 2025</p>
-        </div>
-      </div>
-      <div class="caption">
-        <p>This is the kind of impact we want in our life</p>
-      </div>
-      <div class="imagePost">
-        <img
-          src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210310114057/web-development-image.png"
-          alt="post"
-        />
-      </div>
-      <div class="actionBar">
-        <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-thumbs-up"></i> Like</a>
-        </div>
-        <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-comment"></i> Comment</a>
-        </div>
-        <div class="specialLink">
-          <a href="#"
-            ><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</a
-          >
-        </div>
-        <div class="specialLink">
-          <a href="#"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</a>
-        </div>
-      </div>
-    </div>
+      <% } %>
+    <% } else { %>
+      <h1 style="color: white;">No Posts Found!</h1>
+    <% } %>
   </div>
   <div class="right-content content">
     <div class="card">

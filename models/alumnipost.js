@@ -17,8 +17,8 @@ const postSchema = new Schema({
     user:{
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'Alumni'
     },
 })
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('AlumniPost', postSchema);
