@@ -28,6 +28,8 @@ const authRoutes = require("./routes/auth");
 const userAppRoutes = require("./routes/userApp");
 
 const User = require("./models/user");
+const Student = require("./models/student");
+const Alumni = require("./models/alumni");
 
 const errorController = require("./controllers/error");
 
@@ -49,10 +51,37 @@ app.use((req, res, next) => {
   User.findById(req.session.user._id)
     .then((user) => {
       req.user = user;
-      next();
+      return next();
     })
-    .catch((err) => console.log(err));
+    .catch(err => {
+      console.log(err);
+    })
 });
+
+app.use((req,res,next)=>{
+  const role = req.user.role;
+    if(role === "student"){
+      Student.findOne({user:req.user})
+        .then(student => {
+          req.userType = student;
+          return next();
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else if(role === "alumni"){
+      Alumni.findOne({user:req.user})
+        .then(alumni => {
+          req.userType = alumni;
+          return next();
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    
+})
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;

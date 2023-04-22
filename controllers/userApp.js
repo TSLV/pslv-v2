@@ -14,83 +14,6 @@ exports.getIndex = (req, res, next) => {
   res.render("userApp/index");
 };
 
-// exports.getDashboard = (req, res, next) => {
-//   let userPosts = [];
-//   const role = req.user.role;
-//   if (role === "student") {
-//     Student.findOne({ user: req.user })
-//       .then((student) => {
-//         Post.find()
-//           .populate("user")
-//           .then((data) => {
-//             const userPost = [];
-//             // const completeData = data.map(doc=>{
-//             //     return Student.find({user:doc.user._id})
-//             //         .then(st => {
-//             //             return st;
-//             //         })
-//             // })
-//             for(let i of data){
-//                 Student.find({user: i.user._id})
-//                     .then(st => {
-//                         flag = true;
-//                         userPost.push(st);
-//                     })
-//             }
-//           });
-//       })
-//       //   .then((posts) => {
-//       //     posts.populate("user").then((doc) => {
-//       //       console.log(doc);
-//       //     });
-//       //     const newDataArray = posts.map(async (post) => {
-//       //       const user = await post.populate("user");
-//       //     //   console.log(user);
-//       //       const role = user.user.role;
-//       //       if (role === "student") {
-//       //         const student = await Student.find({ user: user.user._id });
-//       //         const newFormat = {
-//       //           postDetails: await { ...post._doc },
-//       //           userDetails: await { ...student[0]._doc },
-//       //         };
-//       //         return newFormat;
-//       //       } else {
-//       //         return (newFormat = {
-//       //           postDetails: {},
-//       //           userDetails: {},
-//       //         });
-//       //       }
-//       //     });
-//       //     // const newDataArray = posts.map((post) => {
-//       //   await user = post.populate("user").then((user) => {
-//       //     const role = user.user.role;
-//       //     if (role === "student") {
-//       //       Student.find({ user: user.user._id }).then((st) => {
-//       //         const newFormat = {
-//       //           postDetails: { ...post._doc },
-//       //           userDetails: { ...st[0]._doc },
-//       //         };
-//       //         userPosts.push(newFormat);
-//       //         return newFormat;
-//       //       }).then(data=>{
-//       //         return data;
-//       //       })
-//       //     }
-//       //   });
-//       // });
-//       //   })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   } else if (role === "alumni") {
-//     Alumni.findOne({ user: req.user }).then((alumni) => {
-//       res.render("userApp/home", {
-//         user: alumni,
-//         role: role,
-//       });
-//     });
-//   }
-// };
 exports.getDashboard = (req,res,next)=>{
     const role = req.user.role;
     if(role === "student"){
@@ -101,7 +24,9 @@ exports.getDashboard = (req,res,next)=>{
                         AlumniPost.find().populate('user')
                             .then(alposts=>{
                                 const posts = stposts.concat(alposts);
-                                console.log(posts);
+                                posts.sort((a,b)=>{
+                                    return new Date(b.timestamp) - new Date(a.timestamp);
+                                })
                                 res.render('userApp/home', {
                                     user: student,
                                     role: role,
@@ -126,7 +51,6 @@ exports.getDashboard = (req,res,next)=>{
                                 posts.sort((a,b)=>{
                                     return new Date(b.timestamp) - new Date(a.timestamp);
                                 })
-                                console.log(posts);
                                 res.render('userApp/home', {
                                     user: alumni,
                                     role: role,
@@ -141,7 +65,6 @@ exports.getDashboard = (req,res,next)=>{
             })
     }
 }
-// exports.postPost = (req, res, next) => {
 //   const caption = req.body.caption;
 //   const imageUrl = req.body.imageUrl;
 
@@ -203,6 +126,6 @@ exports.postPost = (req,res,next)=>{
 
 exports.getNetwork = (req, res, next) => {
   res.render("userApp/network", {
-    user: req.user,
+    user: req.userType,
   });
 };
