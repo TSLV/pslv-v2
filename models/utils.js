@@ -1,0 +1,4 @@
+exports.CONNECTION_TYPES = [
+    "MUTUAL",
+    "ALUMNI-APPROVAL"
+]

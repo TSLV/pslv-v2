@@ -1,35 +1,37 @@
 const path = require("path");
-
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const { config } = require("dotenv")
+const compression = require("compression");
+const cors = require("cors");
+const authRoutes = require("./routes/auth");
+const userAppRoutes = require("./routes/userApp");
+const User = require("./models/user");
+const errorController = require("./controllers/error");
 
-const MONGODB_URI =
-  "mongodb+srv://tusharph1:waBNaaagIH0u97aR@cluster0.x6qzg8m.mongodb.net/app?retryWrites=true&w=majority";
+config()
+
+const DB_URL = process.env.DB_URL
+const PORT = process.env.PORT || 6969
 
 const app = express();
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: DB_URL,
   collection: "sessions",
 });
-const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-const authRoutes = require("./routes/auth");
-const userAppRoutes = require("./routes/userApp");
 
-const User = require("./models/user");
-
-const errorController = require("./controllers/error");
 
 app.use(
   session({
@@ -39,10 +41,12 @@ app.use(
     store: store,
   })
 );
-app.use(csrfProtection);
+app.use(csrf());
 app.use(flash());
+app.use(compression())
+app.use(cors())
 
-app.use((req, res, next) => {
+app.use((req, _, next) => {
   if (!req.session.user) {
     return next();
   }
@@ -66,14 +70,11 @@ app.use(userAppRoutes);
 app.use(errorController.get404);
 
 mongoose
-.connect(MONGODB_URI)
-.then((result) => {
+.connect(DB_URL)
+.then(() => {
   console.log("Database connected");
-  app.listen(8000, () => {
-    console.log("Server is running on port 8000");
+  app.listen(PORT, () => {
+    console.log("Server is running on port:", PORT);
   });
 })
-.catch((err) => {
-  console.log(err);
-});
-// waBNaaagIH0u97aR
+.catch(console.log);
