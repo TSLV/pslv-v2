@@ -10,8 +10,16 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
+  age:{
+    type: Number,
+    required: true,
+  },
   dob: {
     type: Date,
+    required: true,
+  },
+  institute:{
+    type: String,
     required: true,
   },
   joinYear: {
@@ -28,21 +36,6 @@ const studentSchema = new Schema({
   imageUrl: {
     type: String,
   },
-  address: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Address",
-  },
-  institute: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Institute",
-  },
-  contact: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Contact",
-  },
   user: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -50,4 +43,4 @@ const studentSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Institute", studentSchema);
+module.exports = mongoose.model("Student", studentSchema);

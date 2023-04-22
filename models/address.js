@@ -22,6 +22,11 @@ const addressSchema = new Schema({
         type: String,
         required: true,
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
 })
 
 module.exports = mongoose.model('Address', addressSchema);

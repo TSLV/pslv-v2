@@ -941,7 +941,7 @@ a:hover {
 }
 .formSection {
   display: flex;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 }
 .formImgContainer {
@@ -949,12 +949,13 @@ a:hover {
   justify-content: center;
   align-items: center;
   background-color: white;
+  width: 50%;
 }
 .formImgContainer img {
-  width: 400px;
-  height: 400px;
-  /* object-fit: contain;
-  object-position: center; */
+  width: 100%;
+}
+.formContainer{
+  width: 50%;
 }
 .formContainer form {
   display: flex;
@@ -995,6 +996,7 @@ a:hover {
 }
 .submitButton:hover {
   background-color: #029ffa;
+  color: white;
 }
 
 /* login/signup */
@@ -1343,6 +1345,23 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   gap: 4rem;
+}
+.imgSide{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 50%;
+}
+.imgSide img{
+  width: 100%;
+}
+.imgCol{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 100%;
 }
 .filled-button {
   border: 1px solid white;

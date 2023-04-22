@@ -13,22 +13,8 @@ const instituteSchema = new Schema({
     bio:{
         type: String,
     },
-    address:{
-        addressId:{
-            type: Schema.Types.ObjectId,
-            required: true,
-            ref: 'Address'
-        }
-    },
     imageUrl: {
         type: String,
-    },
-    contact:{
-        contactId:{
-            type: Schema.Types.ObjectId,
-            required: true,
-            ref: 'Contact'
-        }
     },
     instituteList:{
         type: Schema.Types.ObjectId,
@@ -36,11 +22,9 @@ const instituteSchema = new Schema({
         ref: 'instituteList'
     },
     user:{
-        userId: {
-            type: Schema.Types.ObjectId,
-            required: true,
-            ref: 'User'
-        }
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 
 })

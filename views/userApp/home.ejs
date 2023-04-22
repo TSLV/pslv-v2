@@ -5,10 +5,10 @@
     <div class="card profileCard">
       <div class="cover"></div>
       <div class="profileInfo">
-        <img src="/images/picture.jpeg" alt="profileImg" class="profileImg" />
-        <strong class="userName">Random Name</strong>
-        <small class="userProfession">Full Stack Developer</small>
-        <span>IIIT SRI CITY</span>
+        <img src="<%= user.imageUrl %>" alt="profileImg" class="profileImg" />
+        <strong class="userName"><%= user.firstname %> <%= user.lastname %> <span style="text-transform: capitalize;">( <%= role %> )</span></strong>
+        <small class="userProfession"><%= user.bio %></small>
+        <span><%= user.institute %></span>
       </div>
       <div class="connection">
         <strong>6645</strong>
@@ -70,23 +70,23 @@
     <div class="card">
       <div class="postBox">
         <div class="profileImgPost">
-          <img src="/images/picture.jpeg" alt="profileImg" />
+          <img src="<%= user.imageUrl %>" alt="profileImg" />
         </div>
         <input type="text" placeholder="Start a post" />
       </div>
       <div class="buttonBox">
         <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-image"></i> Photo</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#photoModal"><i class="fa-regular fa-image"></i> Photo</a>
         </div>
         <div class="specialLink">
-          <a href="#"><i class="fa-brands fa-youtube"></i> Video</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-brands fa-youtube"></i> Video</a>
         </div>
         <div class="specialLink">
-          <a href="#"><i class="fa-regular fa-calendar-days"></i> Event</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-regular fa-calendar-days"></i> Event</a>
         </div>
         <div class="specialLink">
           <a href="#"
-            ><i class="fa-regular fa-newspaper"></i> Write an article</a
+          data-bs-toggle="modal" data-bs-target="#articleModal"><i class="fa-regular fa-newspaper"></i> Write an article</a
           >
         </div>
       </div>
@@ -218,4 +218,56 @@
     <%-include(`../includes/footer.ejs`)%> 
   </div>
 </main>
+<!-- Photo Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a Photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/post" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">What's in your mind</label>
+            <input type="text" class="form-control" name="caption" >
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Image URL</label>
+            <input type="text" class="form-control" name="imageUrl">
+          </div>
+          <button type="submit" class="btn submitButton" style="width: 100%;">Post</button>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Write an Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/post" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">What's in your mind</label>
+            <textarea class="form-control" name="caption" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn submitButton" style="width: 100%;">Post</button>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%-include(`../includes/end.ejs`)%>

@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose")
 
 
-module.exports = model("institute-list", new Schema({
+module.exports = model("Institute-List", new Schema({
     name: {
         type: String,
         unique: true,
