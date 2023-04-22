@@ -1,3 +1,5 @@
 exports.get404 = (req, res, next) => {
-  res.status(404).render("error/error");
+  res.status(404).render("error/error",{
+    user: req.user,
+  });
 };
