@@ -2,187 +2,30 @@
 <%-include(`../includes/nav.ejs`)%> 
 <main class="mainNotificationContainer">
   <div class="left-content notificationContent">
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
-    <div class="notification--card">
-      <div class="notification--image--div">
-        <img
-          class="notification--card--image"
-          src="/images/eventT3.png"
-          alt=""
-        />
-      </div>
-
-      <div class="notification--card--heading">
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis
-          beatae vel dolorem deleniti minus eaque tempora vero ducimus
-          cupiditate consectetur molestiae sint explicabo nulla, voluptatum,
-          modi iure, nisi laborum hic?
-        </p>
-      </div>
-      <!-- three dot button here -->
-    </div>
+    <%if(posts.length>0){%>
+      <%for(let post of posts){%>
+        <div class="notification--card">
+          <div class="notification--image--div">
+            <img
+              class="notification--card--image"
+              src="<%=post.user.imageUrl%>"
+              alt=""
+            />
+          </div>
+    
+          <div class="notification--card--heading">
+            <p>
+              <strong><%=post.user.firstname%> <%=post.user.lastname%></strong> has posted a post. <a href="/home" class="linkStyle">See post</a>
+            </p>
+          </div>
+        </div>
+      <%}%>
+    <%}else{%>
+      <h3>No Notifications Yet</h3>
+    <%}%>
   </div>
-  <!-- <div class="right-content content">
-      
-    </div> -->
   <div class="right--content">
-    <!-- <div class="right--content--top">
-      <h5>Manage your Notifications</h5>
-      <h6><a href="#">View Settings</a></h6>
-    </div> -->
     <%-include(`../includes/footer.ejs`)%> 
   </div>
 </main>
-<%-include(`../includes/end.ejs`)%> 
+<%-include(`../includes/end.ejs`)%>

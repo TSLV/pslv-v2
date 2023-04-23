@@ -1,0 +1,52 @@
+<%-include(`../includes/start.ejs`)%>
+<div class="admin-nav">
+    <img src="/images/avatar-default.png" alt="mascot" class="logoImg">
+    <h1 class="admin-h1">Admin</h1>
+</div>
+
+<div class="main-container">
+  <div class="container-left admin-container">
+    <form action="">
+      <h1>Post News</h1>
+      <textarea name="newsText" id="newsText" cols="30" rows="10" placeholder="New Updates"></textarea
+      ><br />
+      <button class="btn btn-lg btn-outline">Post</button>
+    </form>
+  </div>
+
+  <div class="container-middle admin-container">
+    <h1 class="admin-middle-h1">Compose Email</h1>
+    <form action="">
+      <label class="email-to" for="email">To: </label><br />
+      <input
+        type="email"
+        id="email-to"
+        required
+        style="border: none; box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 12px 2px"/>
+        <br/>
+
+      <input
+        type="text"
+        id="email-subject"
+        placeholder="Subject"
+        style="border: none; box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 12px 2px"
+      /><br /><br />
+      <textarea
+        name="emailText"
+        id="emailText"
+        required
+        cols="35"
+        rows="7"
+        placeholder="Compose Email"
+      ></textarea
+      ><br />
+      <button class="btn btn-lg btn-outline">Send</button>
+    </form>
+  </div>
+
+  <div class="container-right admin-container">
+    <h1>Right Container asdfhasgjh</h1>
+  </div>
+</div>
+
+<%-include(`../includes/end.ejs`)%>

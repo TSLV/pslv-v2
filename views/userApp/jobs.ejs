@@ -2,67 +2,13 @@
 <%-include(`../includes/nav.ejs`)%>
 <main class="job-container">
     <div class="continer-left">
-        <div class="card left-nav">
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">bookmark</span>
-                <div style="font-size: 15px;">My Jobs</div>
+        <% if(usermain.role === 'alumni'){%>
+            <div class="card">
+                <h2><%= jobs.length %> Jobs Posted</h2>
             </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">notifications_active</span>
-                <div style="font-size: 15px;">Job Alerts</div>
-            </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">assignment_turned_in</span>
-                <div style="font-size: 15px;">Skill Assessments</div>
-            </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">assignment</span>
-                <div style="font-size: 15px;">Interview Prep</div>
-            </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">description</span>
-                <div style="font-size: 15px;">Resume Builder</div>
-            </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">youtube_activity</span>
-                <div style="font-size: 15px;">Career Guidance</div>
-            </div>
-            <div style="display: flex; flex-direction: row; gap: .5rem; align-items: center;">
-                <span class="material-symbols-rounded job-icon">settings</span>
-                <div style="font-size: 15px;">Application Settings</div>
-            </div>
-        </div>
+        <%}%>
     </div>
     <div class="container-main">
-        <div class="card suggested-jobs-container">
-            <div class="suggested-title">
-                <div style="font-size: 18px; font-weight: 500;">Suggested Jobs</div>
-                <span class="material-symbols-rounded job-icon">close</span>
-            </div>
-            <div class="suggested-jobs">
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Location: Chennai</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Location: Hyderabad</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Location: Bengaluru</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Software Engineer</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Web Developer</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Android Developer</div>
-                </button>
-                <button class="text-button suggested-jobs-button">
-                    <span class="material-symbols-rounded job-icon">search</span><div>Blockchain Developer</div>
-                </button>
-            </div>
-        </div>
         <div class="card job-card-container">
             <div class="container-title">
                 <div style="font-size: 18px; font-weight: 600; color: white;">Recommended for you</div>
@@ -153,255 +99,46 @@
                 </div>
             </div>
         </div>
-        <div class="card job-card-container">
-            <div class="container-title">
-                <div style="font-size: 18px; font-weight: 600; color: white;">Software Engineer</div>
-                <div style="font-size: 13px; font-weight: normal;">Based on your job location. Chennai nearest 25miles</div>
+        <%if(usermain.role === 'alumni'){%>
+            <div class="card">
+                <h3 style="text-align: center;">Post a job</h3>
+                <form action="/post-job" method="post" class="jobForm">
+                    <label class="jobLabel" for="job-title">Job Title</label>
+                    <input class="jobInput" type="text" id="job-title" name="jobtitle" required>
+            
+                    <label class="jobLabel" for="company-name">Company Name</label>
+                    <input class="jobInput" type="text" id="company-name" name="companyname" required>
+            
+                    <label class="jobLabel" for="job-description">Job Description</label>
+                    <textarea class="jobInput" id="job-description" name="jobdescription" required></textarea>
+            
+                    <label class="jobLabel" for="job-location">Job Location</label>
+                    <input class="jobInput" type="text" id="job-location" name="joblocation" required>
+            
+                    <label class="jobLabel" for="job-type">Job Type</label>
+                    <select class="jobInput" id="job-type" name="jobtype" required>
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="temporary">Temporary</option>
+                        <option value="internship">Internship</option>
+                    </select>
+            
+                    <label class="jobLabel" for="job-salary">Salary</label>
+                    <input class="jobInput" type="number" id="job-salary" name="jobsalary" required>
+            
+            
+                    <label class="jobLabel" for="job-skills">Skills</label>
+                    <textarea class="jobInput" id="job-skills" name="jobskills" required></textarea>
+                    <button type="submit" class="submitButton" style="width: 100%;">Post Job</button>
+                </form>
             </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Web Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Android Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Web Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card job-card-container">
-            <div class="container-title">
-                <div style="font-size: 18px; font-weight: 600; color: white;">Software Engineer</div>
-                <div style="font-size: 13px; font-weight: normal;">Based on your job location. Location Hyderabad</div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Web Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Android Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Web Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-icon job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded job-icon">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div class="posted-time">Posted 1day ago</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded job-icon" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                    <div></div>      
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                    <div></div>      
-                </div>
-            </div>
-            <div class="job-card">
-                <div class="company-image">
-                    <img src="/media/logo/logo.png" height="50px" width="50px" />
-                </div>
-                <div class="company-info">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div style="color: white; font-size: 18px; font-weight: 450;" class="job-name">Developer</div>
-                        <div style="display: flex; flex-direction: row; gap: 2rem; font-size: 18px;">
-                            <span class="material-symbols-rounded job-visibility">visibility_off</span>
-                            <span class="material-symbols-rounded">bookmark</span>
-                        </div>
-                    </div>
-                    <div class="company-name">Posted by <span style="font-weight: bold;">Company 1</span></div>
-                    <div class="company-location">Chennai, Tamil Nadu, India <span style="font-size: 15px;">|</span> On-site</div>
-                    <div style="display: flex; flex-direction: row; padding-top: 5px; gap: 4px;">
-                        <span class="material-symbols-rounded" style="color: orange; font-size: 25px;">star</span>
-                        <div>Actively Hiring</div>
-                    </div>
-                    <div></div>      
-                </div>
-            </div>
-        </div>
+        <%}%>
     </div>
     <div class="container-right">
         <div class="card job-helper">
             <div style="display: flex; flex-direction: column;">
                 <div style="font-size: 18px; font-weight: 600; color: white;">Job Seeker Guidance</div>
-                <div style="font-size: 15px;">Recommended based on your activity and preferences</div>
             </div>
             <div style="display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: #cacaca;">
                 <img src="/images/job-hunt.svg" width="80%" alt="job-hunt" style="padding-left: 10%;"/>
