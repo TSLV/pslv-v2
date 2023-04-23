@@ -12,6 +12,9 @@ const authRoutes = require("./routes/auth");
 const userAppRoutes = require("./routes/userApp");
 const User = require("./models/user");
 const errorController = require("./controllers/error");
+const Student = require("./models/student");
+const Alumni = require("./models/alumni");
+const connectionRoutes = require("./routes/connection")
 
 config()
 
@@ -31,12 +34,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-const authRoutes = require("./routes/auth");
-const userAppRoutes = require("./routes/userApp");
-
-const User = require("./models/user");
-const Student = require("./models/student");
-const Alumni = require("./models/alumni");
 
 
 app.use(
@@ -67,28 +64,26 @@ app.use((req, _, next) => {
 });
 
 app.use((req,res,next)=>{
-  const role = req.user.role;
-    if(role === "student"){
-      Student.findOne({user:req.user})
-        .then(student => {
-          req.userType = student;
-          return next();
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-    else if(role === "alumni"){
-      Alumni.findOne({user:req.user})
-        .then(alumni => {
-          req.userType = alumni;
-          return next();
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-    
+  if (!req.session.user) {
+    return next();
+  }
+  const role = req.user?.role;
+  if(role === "student"){
+    Student.findOne({ user:req.user })
+    .then(student => {
+      req.userType = student;
+      return next();
+    })
+    .catch(console.log)
+  }
+  else if(role === "alumni"){
+    Alumni.findOne({user:req.user})
+    .then(alumni => {
+      req.userType = alumni;
+      return next();
+    })
+    .catch(console.log)
+  }
 })
 
 app.use((req, res, next) => {
@@ -99,7 +94,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(userAppRoutes);
-
+app.use("/api/connection", connectionRoutes)
 app.use(errorController.get404);
 
 mongoose

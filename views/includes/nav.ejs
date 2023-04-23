@@ -69,13 +69,12 @@
                   <div class="userProfile">
                     <div class="profileImgPost">
                       <img
-                        src="<%= user.imageUrl %>"
-                        alt="profileImg"
+                        src=<%= user?.imageUrl || "/images/avatar-default.png" %>
                       />
                     </div>
                     <div class="userInfo">
-                      <h5><%= user.firstname %> <%= user.lastname %></h5>
-                      <p><%= user.bio %></p>
+                      <h5><%= user?.firstname %> <%= user?.lastname %></h5>
+                      <p><%= user?.bio %></p>
                     </div>
                   </div>
                   <button class="text-button button-w100">
