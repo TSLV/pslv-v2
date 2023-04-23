@@ -94,6 +94,11 @@ a:hover {
   width: 80px;
 }
 
+.allLikes{
+  height: 40vh;
+  overflow-y: scroll;
+}
+
 .mainContainer {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;

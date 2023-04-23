@@ -10,16 +10,16 @@ const compression = require("compression");
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const userAppRoutes = require("./routes/userApp");
-const User = require("./models/user");
 const errorController = require("./controllers/error");
 const Student = require("./models/student");
 const Alumni = require("./models/alumni");
 const connectionRoutes = require("./routes/connection")
+const User = require("./models/user");
 
 config()
 
 const DB_URL = process.env.DB_URL
-const PORT = process.env.PORT || 6969
+const PORT = +process.env.PORT || 6969
 
 const app = express();
 const store = new MongoDBStore({

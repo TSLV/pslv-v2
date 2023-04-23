@@ -97,22 +97,22 @@
           <div class="userProfile">
             <div class="profileImgPost">
               <img
-                src="<%= post.user.imageUrl %>"
+                src="<%= post.postDetails.user.imageUrl %>"
                 alt="profileImg"
               />
             </div>
             <div class="userInfo">
-              <h5><%= post.user.firstname %> <%= post.user.lastname %></h5>
-              <p><%= post.user.bio %></p>
+              <h5><%= post.postDetails.user.firstname %> <%= post.postDetails.user.lastname %></h5>
+              <p><%= post.postDetails.user.bio %></p>
             </div>
           </div>
           <div class="caption">
-            <p><%= post.caption %></p>
+            <p><%= post.postDetails.caption %></p>
           </div>
-          <% if(post.imageUrl) {%>
+          <% if(post.postDetails.imageUrl) {%>
             <div class="imagePost">
               <img
-                src="<%= post.imageUrl %>"
+                src="<%= post.postDetails.imageUrl %>"
                 alt="post"
               />
             </div>
@@ -120,31 +120,37 @@
           <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
             <div class="specialLink">
               <a href="#"
-              data-bs-toggle="modal" data-bs-target="#likeModal<%= post._id %>"><%= post.postResponse.likes.numLikes %> Likes</a
+              data-bs-toggle="modal" data-bs-target="#likeModal<%= post.postDetails._id %>"><%= post.postDetails.postResponse.likes.numLikes %> Likes</a
               >
             </div>
           </div>
-          <div class="modal fade" id="likeModal<%= post._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+          <div class="modal fade" id="likeModal<%= post.postDetails._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= post.postResponse.likes.numLikes %> Likes</h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><%= post.postDetails.postResponse.likes.numLikes %> Likes</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="allLikes" style="display: flex;flex-direction: column;">
-                    <div class="userProfile">
-                      <div class="profileImgPost">
-                        <img
-                          src="#"
-                          alt="profileImg"
-                        />
-                      </div>
-                      <div class="userInfo">
-                        <h5><%= post.caption %></h5>
-                        <p>xyz</p>
-                      </div>
-                    </div>
+                    <% if (post.userDetails.length > 0) { %>
+                      <% for(let postUser of post.userDetails){ %>
+                        <div class="userProfile">
+                          <div class="profileImgPost">
+                            <img
+                              src="<%= postUser.imageUrl %>"
+                              alt="profileImg"
+                            />
+                          </div>
+                          <div class="userInfo">
+                            <h5><%= postUser.firstname %> <%= postUser.lastname %></h5>
+                            <p><%= postUser.bio %></p>
+                          </div>
+                        </div>
+                      <%}%>
+                    <%} else {%>
+                      <h1>No Likes Yet</h1>
+                    <%}%>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -155,21 +161,72 @@
           </div>
           <div class="actionBar">
             <form action="/like" method="post">
-              <input type="hidden" name="targetPost" value="<%= post._id %>">
-              <input type="hidden" name="postedby" value="<%= post.postedby %>">
+              <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button class="linkButton" type="submit"><i class="fa-regular fa-thumbs-up"></i> Like</i></button>
             </form>
-            <form action="/comment" method="post">
-              <input type="hidden" name="targetPost" value="<%= post._id %>">
-              <input type="hidden" name="postedby" value="<%= post.postedby %>">
+            <!-- <form action="/comment" method="post">
+              <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button class="linkButton" type="submit"><i class="fa-regular fa-comment"></i> Comment</button>
-            </form>
-            <form action="/repost" method="post">
+            </form> -->
+            <div class="specialLink">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal<%= post.postDetails._id %>"><i class="fa-regular fa-comment"></i> Comment</a>
+            </div>
+            <div class="modal fade" id="commentModal<%= post.postDetails._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="allLikes" style="display: flex;flex-direction: column;">
+                      <div class="postBox">
+                        <div class="profileImgPost">
+                          <img src="<%= user.imageUrl %>" alt="profileImg" />
+                        </div>
+                        <form action="/comment" method="post" style="display: flex; justify-content: space-between; gap: 1rem; width: 100%;">
+                          <input type="text" name="comment" placeholder="Add a comment" style="border: 1px solid black; width: 100%;"/>
+                          <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+                          <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button type="submit" class="submitButton" style="padding: 1rem; border-radius: 50%;"><i class="fa-sharp fa-solid fa-paper-plane"></i></button>
+                        </form>
+                      </div>
+                      <% if (post.commentDetails.length > 0) { %>
+                        <% for(let postUser of post.commentDetails){ %>
+                          <div class="userProfile">
+                            <div class="profileImgPost">
+                              <img
+                                src="<%= postUser.commentUser.imageUrl %>"
+                                alt="profileImg"
+                              />
+                            </div>
+                            <div class="userInfo" style="border-radius: 10px; background-color: rgb(231, 231, 231); padding: 0.25rem 0.5rem; width: 80%;">
+                              <h6 style="color: rgb(129, 129, 129); margin: 0;"><%= postUser.commentUser.firstname %> <%= postUser.commentUser.lastname %></h6>
+                              <p style="color: rgb(129, 129, 129);font-size: 0.75rem;"><%= postUser.commentUser.bio %></p>
+                              <p style="margin-top: 1rem;"><%= postUser.comment %></p>
+                            </div>
+                          </div>
+                        <%}%>
+                      <%} else {%>
+                        <h1>No Comments Yet</h1>
+                      <%}%>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form>
               <button class="linkButton" type="submit"><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</button>
             </form>
-            <form action="/send" method="post">
+            <form>
               <button class="linkButton" type="submit"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
             </form>
           </div>

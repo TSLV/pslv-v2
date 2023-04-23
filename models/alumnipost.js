@@ -34,6 +34,19 @@ const postSchema = new Schema({
                 }
             ]
         },
+        comments:[
+            {
+                userId: {
+                    type: Schema.Types.ObjectId,
+                    required: true,
+                    ref: "User",
+                },
+                comment: {
+                    type: String,
+                    required: true,
+                } 
+            }
+        ],
     },
     user:{
         type: Schema.Types.ObjectId,
@@ -58,6 +71,12 @@ postSchema.methods.addLike = function(user){
         return this.save();
     }
     return this.save()
+}
+postSchema.methods.addComments = function(user,comment){
+    const comments = [...this.postResponse.comments]
+    comments.push({userId:user._id, comment:comment})
+    this.postResponse.comments = comments;
+    return this.save();
 }
 
 module.exports = mongoose.model('AlumniPost', postSchema);
