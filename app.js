@@ -59,6 +59,9 @@ app.use((req, res, next) => {
 });
 
 app.use((req,res,next)=>{
+  if (!req.session.user) {
+    return next();
+  }
   const role = req.user.role;
     if(role === "student"){
       Student.findOne({user:req.user})

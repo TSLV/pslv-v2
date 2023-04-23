@@ -109,27 +109,69 @@
           <div class="caption">
             <p><%= post.caption %></p>
           </div>
-          <div class="imagePost">
-            <img
-              src="<%= post.imageUrl %>"
-              alt="post"
-            />
-          </div>
-          <div class="actionBar">
-            <div class="specialLink">
-              <a href="#"><i class="fa-regular fa-thumbs-up"></i> Like</a>
+          <% if(post.imageUrl) {%>
+            <div class="imagePost">
+              <img
+                src="<%= post.imageUrl %>"
+                alt="post"
+              />
             </div>
-            <div class="specialLink">
-              <a href="#"><i class="fa-regular fa-comment"></i> Comment</a>
-            </div>
+          <% } %>
+          <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
             <div class="specialLink">
               <a href="#"
-                ><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</a
+              data-bs-toggle="modal" data-bs-target="#likeModal<%= post._id %>"><%= post.postResponse.likes.numLikes %> Likes</a
               >
             </div>
-            <div class="specialLink">
-              <a href="#"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</a>
+          </div>
+          <div class="modal fade" id="likeModal<%= post._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><%= post.postResponse.likes.numLikes %> Likes</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="allLikes" style="display: flex;flex-direction: column;">
+                    <div class="userProfile">
+                      <div class="profileImgPost">
+                        <img
+                          src="#"
+                          alt="profileImg"
+                        />
+                      </div>
+                      <div class="userInfo">
+                        <h5><%= post.caption %></h5>
+                        <p>xyz</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="actionBar">
+            <form action="/like" method="post">
+              <input type="hidden" name="targetPost" value="<%= post._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postedby %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="linkButton" type="submit"><i class="fa-regular fa-thumbs-up"></i> Like</i></button>
+            </form>
+            <form action="/comment" method="post">
+              <input type="hidden" name="targetPost" value="<%= post._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postedby %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="linkButton" type="submit"><i class="fa-regular fa-comment"></i> Comment</button>
+            </form>
+            <form action="/repost" method="post">
+              <button class="linkButton" type="submit"><i class="fa-sharp fa-solid fa-arrows-rotate"></i> Repost</button>
+            </form>
+            <form action="/send" method="post">
+              <button class="linkButton" type="submit"><i class="fa-sharp fa-solid fa-paper-plane"></i> Send</button>
+            </form>
           </div>
         </div>
       <% } %>
