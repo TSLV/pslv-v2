@@ -165,6 +165,18 @@ a:hover {
 .specialLink a:hover {
   color: white;
 }
+.linkButton{
+  border: none;
+  outline: node;
+  color: #3297d1;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.linkButton:hover {
+  color: white;
+}
+
 
 .left-group {
   display: flex;
@@ -225,7 +237,7 @@ a:hover {
   width: 100%;
 }
 .actionBar {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;

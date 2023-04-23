@@ -67,23 +67,28 @@ app.use((req,res,next)=>{
   if (!req.session.user) {
     return next();
   }
-  const role = req.user?.role;
-  if(role === "student"){
-    Student.findOne({ user:req.user })
-    .then(student => {
-      req.userType = student;
-      return next();
-    })
-    .catch(console.log)
-  }
-  else if(role === "alumni"){
-    Alumni.findOne({user:req.user})
-    .then(alumni => {
-      req.userType = alumni;
-      return next();
-    })
-    .catch(console.log)
-  }
+  const role = req.user.role;
+    if(role === "student"){
+      Student.findOne({user:req.user})
+        .then(student => {
+          req.userType = student;
+          return next();
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else if(role === "alumni"){
+      Alumni.findOne({user:req.user})
+        .then(alumni => {
+          req.userType = alumni;
+          return next();
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    
 })
 
 app.use((req, res, next) => {
