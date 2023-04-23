@@ -1,4 +1,4 @@
 <div class="twoInput">
-    <input type="text" class="email" name="email" placeholder="Email">  
-    <input type="number" class="phone" name="phone" placeholder="Phone Number">  
+    <input type="text" class="email" name="email" placeholder="Email" value="<% if(editing) { %><%=contact.email %><%}%>">  
+    <input type="number" class="phone" name="phone" placeholder="Phone Number" value="<% if(editing) { %><%=contact.phone%><%}%>">  
 </div>

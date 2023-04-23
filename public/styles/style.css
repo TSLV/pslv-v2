@@ -811,7 +811,7 @@ a:hover {
 .personalDescription,
 .location-info,
 .connection-info {
-  font-size: 13px;
+  font-size: 0.9rem;
   color: #cacaca;
 }
 

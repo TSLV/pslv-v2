@@ -1,7 +1,7 @@
 <div class="oneInput">
-    <input type="text" class="instituteName" name="instituteName" placeholder="Institute Name">
+    <input type="text" class="instituteName" name="instituteName" placeholder="Institute Name" value="<% if(editing) { %><%=user.institute %><%}%>">
 </div>
 <div class="twoInput">
-    <input type="number" class="joinYear" name="joinYear" placeholder="Joining Year">  
-    <input type="number" class="passYear" name="passYear" placeholder="Passing Year">  
+    <input type="number" class="joinYear" name="joinYear" placeholder="Joining Year" value="<% if(editing) { %><%=user.joinYear%><%}%>">  
+    <input type="number" class="passYear" name="passYear" placeholder="Passing Year" value="<% if(editing) { %><%=user.passYear%><%}%>">  
 </div>

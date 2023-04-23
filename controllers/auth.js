@@ -172,6 +172,7 @@ exports.postDetails = (req,res,next) => {
   const bio = req.body.bio;
   const profileImageUrl = req.body.profileImage;
 
+  console.log(dob);
   const contact = new Contact({
     phone: +phone,
     email: email,
