@@ -36,22 +36,38 @@ exports.getDashboard = async (req,res,next)=>{
             if(temp.role === "student") {
                 temp1.push(await Student.findOne({ user: temp._id }))
             }
-            else {
+            else if(temp.role === "alumni"){
                 temp1.push(await Alumni.findOne({ user: temp._id }))
             }
         }
-        likesArray.push(temp1)
+        var commentDetails = []
+        for(var comment of post.postResponse.comments){
+            const textComment = comment.comment;
+            const temp = await User.findById(comment.userId);
+            if(temp.role === "student"){
+                commentDetails.push({comment:textComment, commentUser: await Student.findOne({ user: temp._id })})
+            }
+            else if(temp.role === "alumni"){
+                commentDetails.push({comment:textComment, commentUser: await Alumni.findOne({ user: temp._id })})
+            }
+        }
+        likesArray.push({postDetails: post, userDetails: temp1, commentDetails})
+        // likesArray.map(doc => doc.commentDetails.map(cmnt => ))
     }
-
-    console.log(likesArray);
-
     if(userRole === 'student'){
         const userStudent = await Student.findOne({user: req.user});
         res.render('userApp/home', {
             user: userStudent,
             role: userRole,
-            posts: posts,
-            likesArray
+            posts: likesArray,
+        });
+    }
+    else if(userRole === 'alumni'){
+        const userAlumni = await Alumni.findOne({user: req.user});
+        res.render('userApp/home', {
+            user: userAlumni,
+            role: userRole,
+            posts: likesArray,
         });
     }
 
@@ -66,7 +82,7 @@ exports.postPost = (req,res,next)=>{
                 const post = new StudentPost({
                     caption: caption,
                     imageUrl: imageUrl,
-                    postResponse: {likes:{numLikes: 0,users:[]}},
+                    postResponse: {likes:{numLikes: 0,users:[]},comments:[]},
                     user: student[0]._id,
                 })
                 post.save()
@@ -85,7 +101,7 @@ exports.postPost = (req,res,next)=>{
                 const post = new AlumniPost({
                     caption: caption,
                     imageUrl: imageUrl,
-                    postResponse: {likes:{numLikes: 0,users:[]}},
+                    postResponse: {likes:{numLikes: 0,users:[]},comments:[]},
                     user: new ObjectId(alumni[0]._id)
                 })
                 post.save()
@@ -117,6 +133,32 @@ exports.postLikes = (req,res,next) => {
         AlumniPost.findById(targetPost)
             .then(alpost=>{
                 return alpost.addLike(req.user)
+            })
+            .then(result => {
+                res.redirect('/home')
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+exports.postComments = (req,res,next) => {
+    const targetPost = req.body.targetPost;
+    const postedby = req.body.postedby;
+    const comment = req.body.comment;
+    if(postedby === 'student'){
+        StudentPost.findById(targetPost)
+            .then(stpost=>{
+                return stpost.addComments(req.user,comment)
+            })
+            .then(result => {
+                res.redirect('/home')
+            })
+            .catch(err => console.log(err))
+    }
+    else if(postedby === 'alumni'){
+        AlumniPost.findById(targetPost)
+            .then(alpost=>{
+                return alpost.addComments(req.user,comment)
             })
             .then(result => {
                 res.redirect('/home')

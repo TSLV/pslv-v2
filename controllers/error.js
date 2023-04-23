@@ -1,5 +1,7 @@
 exports.get404 = (req, res, next) => {
-  res.status(404).render("error/error",{
-    user: req.userType,
-  });
+  if(req.userType){
+    res.status(404).render("error/error",{
+      user: req.userType,
+    });
+  }
 };
