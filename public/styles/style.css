@@ -1245,7 +1245,7 @@ a:hover {
 
 /* Jobs */
 .job-container {
-  grid-template-columns: 0.6fr 2.5fr 1fr;
+  grid-template-columns: 1.5fr 1.5fr 1fr;
   color: #cacaca;
 }
 
@@ -1408,4 +1408,135 @@ a:hover {
   color: white;
   background-color: #1b2730;
   font-size: 1.5rem;
+}
+
+.FAQ-ques{
+     
+  font-size: 1.2rem;
+  color: #fff;
+}
+.jobForm{
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px 1px lightgray;
+}
+.jobLabel{
+  display: block;
+  margin-bottom: 5px;
+}
+.jobInput{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.jobForm{
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px 1px lightgray;
+}
+.jobLabel{
+  display: block;
+  margin-bottom: 5px;
+}
+.jobInput{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Admin */
+
+.admin-nav{
+  display: flex;
+  justify-content: center;
+  margin-top: 1.6rem;
+  color: #fff;
+  background-color: #1b2730;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.admin-nav img {
+  align-self: center;
+  width: 5rem;
+  height: 5rem;
+}
+
+.admin-h1{
+  font-size: 5rem;
+  font-weight: 500;
+  padding-left: 1rem;
+}
+
+.main-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2rem;
+}
+
+.admin-container {
+  margin: 1.5rem 3rem 0rem;
+  padding: 1rem;
+  background-color: #1b2730;
+  border-radius: 20px;
+}
+
+
+.container-left h1{
+  color: #fff;
+  font-size: 2.7rem;
+  padding: 0rem 0rem 1.2rem;
+}
+
+.container-left textarea{
+  border-radius: 10px;
+}
+
+.container-left button{
+  color: #fff;
+  border: solid 2px;
+  margin-top: 1.2rem;
+}
+
+.container-middle{
+  color: #fff;
+}
+
+.admin-middle-h1{
+  font-size: 2.7rem;
+}
+
+.email-to{
+  font-size: 1.2rem;
+  padding-top: 1.5rem;
+}
+
+#email-to{
+  margin-bottom: 0.4rem;
+  border-radius: 3px;
+}
+
+#email-subject{
+  border-radius: 3px;
+}
+
+#emailText{
+  border-radius: 10px;
+}
+
+.container-middle button{
+  color: #fff;
+  border: solid 2px;
+  margin-top: 1rem;
 }

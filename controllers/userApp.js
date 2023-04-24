@@ -10,6 +10,7 @@ const Contact = require("../models/contact");
 const Skills = require("../models/skills");
 const Interests = require("../models/interest");
 const About = require("../models/about");
+const Job = require("../models/job");
 const { Tokenizer } = require("../utils");
 const request = require("../models/request");
 const connection = require("../models/connection");
@@ -546,6 +547,14 @@ exports.postInterest = async(req,res,next)=>{
     }
 }
 
+exports.getAdmin = async(req,res,next) =>{
+    try {
+        res.render("userApp/admin");
+    } catch (error) {
+        console.log(error);
+    }
+   
+}
 exports.postAbout = async(req,res,next)=>{
     const about = await About.findOne({user: req.user})
     const newAbout = req.body.about
@@ -579,9 +588,35 @@ exports.getNotification = async(req,res,next)=>{
     });
 }
 exports.getJobs = async(req,res,next) => {
+    const jobs = await Job.find({user: req.user})
     res.render('userApp/jobs',{
-        user: req.userType
+        user: req.userType,
+        usermain: req.user,
+        jobs
     })
+}
+
+exports.postJobs = async(req,res,next) => {
+    const title = req.body.jobtitle;
+    const companyname = req.body.companyname;
+    const jobdescription = req.body.jobdescription;
+    const joblocation = req.body.joblocation;
+    const jobtype = req.body.jobtype;
+    const jobsalary = req.body.jobsalary;
+    const jobskills = req.body.jobskills;
+
+    const job = new Job({
+        title: title,
+        companyname: companyname,
+        description: jobdescription,
+        location: joblocation,
+        type: jobtype,
+        salary: jobsalary,
+        skills: jobskills,
+        user: new ObjectId(req.user)
+    })
+    await job.save();
+    res.redirect('/jobs')
 }
 
 exports.getMessages = async(req,res,next) => {
