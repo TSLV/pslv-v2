@@ -348,28 +348,39 @@ exports.getNetwork = async (req, res, next) => {
 };
 
 exports.getProfile = async(req, res, next) => {
-    const role = req.user.role;
-    const contact = await Contact.findOne({user: req.user})
-    const address = await Address.findOne({user: req.user})
-    const skillsData = await Skills.findOne({user: req.user})
+    let user = req.user
+    let userType = req.userType
+    if(req.params.userId) {
+        user = await User.findById(req.params.userId)
+        userType = await (user.role==="student"?Student:Alumni).findOne({ user: user._id})
+    }
+    const role = user.role;
+    const contact = await Contact.findOne({user: user._id})
+    const address = await Address.findOne({user: user._id})
+    const skillsData = await Skills.findOne({user: user._id})
     const skills = skillsData ? skillsData.skills : [];
-    const interestData = await Interests.findOne({user: req.user})
+    const interestData = await Interests.findOne({user: user._id})
     const interests = interestData ? interestData.interests : [];
     var post;
     if(role === 'student'){
-        post = await StudentPost.find({user: req.userType})
+        post = await StudentPost.find({ user: userType._id })
     }
     else if(role === 'alumni'){
-        post = await AlumniPost.find({user: req.userType})
+        post = await AlumniPost.find({ user: userType._id })
     }
+    const users = []
+    users.push(...(await Student.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    users.push(...(await Alumni.find({ user: {$ne: req.user._id }}).limit(4).exec()))
     res.render("userApp/profile", {
-      user: req.userType,
-      usermain: req.user,
+      user: userType,
+      usermain: user,
       contact,
       address,
       post,
       skills,
-      interests
+      interests,
+      ...(req.params.userId && { others: true }),
+      users
     });
   };
 

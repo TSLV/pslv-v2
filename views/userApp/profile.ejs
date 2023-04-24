@@ -346,109 +346,26 @@
   <div class="container-right content">
     <div class="card left-group" style="color: #cacaca">
       <h6>Connect with more people.....</h6>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
+      <% for(const reqUser of users) {%>
+        <form action="/api/connection/create" method="post">
+          <div class="connectSuggestion">
+            <a href="/profile/<%= reqUser.user %>">
+              <div class="connectProfile">
+                <img src="<%= reqUser.imageUrl %>" alt="personImg" />
+                <div class="connectInfo">
+                  <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
+                  <small><%= reqUser.bio %></small>
+                </div>
+              </div>
+            </a>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input style="display: none;" name="from" value="<%= user.user %>">
+            <input style="display: none;" name="to" value="<%= reqUser.user %>">
+            <input style="display: none;" name="type" value="MUTUAL">
+            <button type="submit">Connect</button>
           </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="specialLink">
-        <a href="#">Show More</a>
-      </div>
+        </form>
+      <%}%>
     </div>
     <%-include(`../includes/footer.ejs`)%>
   </div>

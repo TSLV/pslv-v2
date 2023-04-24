@@ -24,13 +24,15 @@
       <% for(const reqUser of users) {%>
         <form action="/api/connection/create" method="post">
           <div class="connectSuggestion">
-            <div class="connectProfile">
-              <img src="<%= reqUser.imageUrl %>" alt="personImg" />
-              <div class="connectInfo">
-                <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
-                <small><%= reqUser.bio %></small>
+            <a href="/profile/<%= reqUser.user %>">
+              <div class="connectProfile">
+                <img src="<%= reqUser.imageUrl %>" alt="personImg" />
+                <div class="connectInfo">
+                  <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
+                  <small><%= reqUser.bio %></small>
+                </div>
               </div>
-            </div>
+            </a>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input style="display: none;" name="from" value="<%= user.user %>">
             <input style="display: none;" name="to" value="<%= reqUser.user %>">
