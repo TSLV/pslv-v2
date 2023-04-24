@@ -23,6 +23,25 @@
     <%}else{%>
       <h3>No Notifications Yet</h3>
     <%}%>
+    <%if(jobNotification.length>0 && usermain.role === "student"){%>
+      <%for(let post of jobNotification){%>
+        <div class="notification--card">
+          <div class="notification--image--div">
+            <img
+              class="notification--card--image"
+              src="<%=post.user.imageUrl%>"
+              alt=""
+            />
+          </div>
+    
+          <div class="notification--card--heading">
+            <p>
+              <strong><%=post.user.firstname%> <%=post.user.lastname%></strong> has posted a Job. <a href="/jobs" class="linkStyle">See Job</a>
+            </p>
+          </div>
+        </div>
+      <%}%>
+    <%}%>
   </div>
   <div class="right--content">
     <%-include(`../includes/footer.ejs`)%> 

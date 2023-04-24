@@ -383,6 +383,7 @@ exports.getProfile = async(req, res, next) => {
     const skills = skillsData ? skillsData.skills : [];
     const interestData = await Interests.findOne({user: user._id})
     const interests = interestData ? interestData.interests : [];
+    const jobs = await Job.find({user: req.userType})
     var post;
     if(role === 'student'){
         post = await StudentPost.find({ user: userType._id })
@@ -413,7 +414,8 @@ exports.getProfile = async(req, res, next) => {
       users,
       postImpression,
       connection: connections.length,
-      aboutData
+      aboutData,
+      job: jobs.length
     });
   };
 
@@ -581,22 +583,28 @@ exports.postAbout = async(req,res,next)=>{
 exports.getNotification = async(req,res,next)=>{
     const studentPost = await StudentPost.find().populate("user").exec();
     const alumniPost = await AlumniPost.find().populate("user").exec();
-
+    const jobNotification = await Job.find().populate('user').exec()
     const posts = [...studentPost, ...alumniPost];
     posts.sort((a,b)=>{
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
     res.render('userApp/notifications',{
         user: req.userType,
+        usermain: req.user,
         posts: posts,
+        jobNotification
     });
 }
 exports.getJobs = async(req,res,next) => {
-    const jobs = await Job.find({user: req.user})
+    const jobs = await Job.find({user: req.userType})
+    const allJobs = await Job.find({})
+    const alumnis = await Alumni.find();
     res.render('userApp/jobs',{
         user: req.userType,
         usermain: req.user,
-        jobs
+        jobs,
+        alumnis,
+        allJobs
     })
 }
 
@@ -617,7 +625,7 @@ exports.postJobs = async(req,res,next) => {
         type: jobtype,
         salary: jobsalary,
         skills: jobskills,
-        user: new ObjectId(req.user)
+        user: new ObjectId(req.userType)
     })
     await job.save();
     res.redirect('/jobs')
