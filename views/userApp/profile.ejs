@@ -78,7 +78,7 @@
               </div>
             </div>
           </div>
-          <p class="connection-info">567 connections</p>
+          <p class="connection-info"><%= connection %> connections</p>
         </div>
       </div>
     </div>
@@ -95,10 +95,10 @@
       <div class="analytics-stats">
         <div>
           <div>
-            <span class="material-symbols-rounded">group</span>
+            <span class="material-symbols-rounded">description</span>
           </div>
           <div style="font-size: 20px; text-decoration: none">
-            <a href="/edit-posts" class="linkStyle"><%= post.length %> Posts</a>
+            <a href=<%= others ? '#' : '/edit-posts'%> class="linkStyle"><%= post.length %> Posts</a>
             <div style="font-size: 12px">Discover and Edit your post.</div>
           </div>
         </div>
@@ -107,7 +107,7 @@
             <span class="material-symbols-rounded">bar_chart</span>
           </div>
           <div style="font-size: 20px; text-decoration: none">
-            <a href="/edit-posts" class="linkStyle"><%= postImpression %> Post impressions</a>
+            <a href=<%= others ? '#' : '/edit-posts'%> class="linkStyle"><%= postImpression %> Post impressions</a>
             <div style="font-size: 12px">
               Checkout who's engaging with your posts.
             </div>
@@ -115,12 +115,12 @@
         </div>
         <div>
           <div>
-            <span class="material-symbols-rounded">search</span>
+            <span class="material-symbols-rounded">group</span>
           </div>
           <div style="font-size: 20px; text-decoration: none">
-            <a href="#" class="linkStyle">15 search appearances</a>
+            <a href=<%= others ? '#' : '/network'%> class="linkStyle"><%=connection%> connections</a>
             <div style="font-size: 12px">
-              See how often you appear in the search results.
+              See Your connections.
             </div>
           </div>
         </div>
@@ -199,12 +199,6 @@
         <div class="about-title section-title">
           <div style="font-size: 22px; font-weight: bold">Working</div>
           <div style="display: flex; flex-direction: row; gap: 2rem">
-            <div>
-              <span class="material-symbols-rounded about-edit">add</span>
-            </div>
-            <div>
-              <span class="material-symbols-rounded about-edit">edit</span>
-            </div>
           </div>
         </div>
         <div class="experience-container">
@@ -252,15 +246,11 @@
       <div class="about-title section-title">
         <div style="font-size: 22px; font-weight: bold">Skills</div>
         <div style="display: flex; flex-direction: row; gap: 2rem">
-          <button class="text-button" style="background-color: transparent">
-            Take Skill Test
-          </button>
-          <div>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#skillModal"><span class="material-symbols-rounded about-edit">add</span></a>
-          </div>
-          <div>
-            <span class="material-symbols-rounded about-edit">edit</span>
-          </div>
+          <% if(!others){%>
+            <div>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#skillModal"><span class="material-symbols-rounded about-edit">add</span></a>
+            </div>
+          <%}%>
         </div>
       </div>
       <div class="modal fade" style="color: black;" id="skillModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
@@ -302,9 +292,11 @@
       <div class="about-title section-title">
         <div style="font-size: 22px; font-weight: bold">Interests</div>
         <div style="display: flex; flex-direction: row; gap: 2rem">
-          <div>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#interestModal"><span class="material-symbols-rounded about-edit">add</span></a>
-          </div>
+          <% if(!others){%>
+            <div>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#interestModal"><span class="material-symbols-rounded about-edit">add</span></a>
+            </div>
+          <%}%>
         </div>
       </div>
       <div class="modal fade" style="color: black;" id="interestModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">

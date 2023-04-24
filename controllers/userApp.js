@@ -371,6 +371,10 @@ exports.getProfile = async(req, res, next) => {
     const users = []
     users.push(...(await Student.find({ user: {$ne: req.user._id }}).limit(4).exec()))
     users.push(...(await Alumni.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    
+    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
+    
+
     var postImpression = 0;
     for(var i of post){
         postImpression += i.postResponse.likes.numLikes + i.postResponse.comments.length;
@@ -383,9 +387,10 @@ exports.getProfile = async(req, res, next) => {
       post,
       skills,
       interests,
-      ...(req.params.userId && { others: true }),
+      others: req.params.userId ? true : false,
       users,
-      postImpression
+      postImpression,
+      connection: connections.length
     });
   };
 
