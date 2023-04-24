@@ -182,6 +182,30 @@ exports.postComments = (req,res,next) => {
 
 exports.getNetwork = async (req, res, next) => {
     let requests = await request.find({ type: "MUTUAL", to: req.user._id }).populate(["from", "to"]).exec()
+    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
+    const connectionData = {
+        students: [],
+        alumni: []
+    }
+    connections.forEach(connection => {
+        for(const user of connection.users) {
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+        }
+    })
+    const connectedUsers = []
+    connectedUsers.push(...(await Student.find({ user: { $in: connectionData.students, $ne: req.user._id }})))
+    connectedUsers.push(...(await Alumni.find({ user: { $in: connectionData.alumni, $ne: req.user._id }})))
     const alumni = []
     const students = []
     requests.forEach(request => {
@@ -224,33 +248,8 @@ exports.getNetwork = async (req, res, next) => {
         requestData.push(request)
     })
     const suggestions = []
-    suggestions.push(...(await Student.find({ user: {$ne: req.user._id }})))
-    suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id }})))
-
-    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
-    const connectionData = {
-        students: [],
-        alumni: []
-    }
-    connections.forEach(connection => {
-        for(const user of connection.users) {
-            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
-                connectionData.alumni.push(user._id)
-            }
-            if(user.role === "student" && !connectionData.students.includes(user._id)) {
-                connectionData.students.push(user._id)
-            }
-            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
-                connectionData.alumni.push(user._id)
-            }
-            if(user.role === "student" && !connectionData.students.includes(user._id)) {
-                connectionData.students.push(user._id)
-            }
-        }
-    })
-    const connectedUsers = []
-    connectedUsers.push(...(await Student.find({ user: { $in: connectionData.students, $ne: req.user._id }})))
-    connectedUsers.push(...(await Alumni.find({ user: { $in: connectionData.alumni, $ne: req.user._id }})))
+    suggestions.push(...(await Student.find({ user: {$ne: req.user._id, $nin: connectedUsers.students }})))
+    suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id, $nin: connectedUsers.alumni }})))
     res.render("userApp/network", {
         user: req.userType,
         requests: requestData,
