@@ -11,9 +11,10 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const userAppRoutes = require("./routes/userApp");
 const errorController = require("./controllers/error");
-const User = require("./models/user");
 const Student = require("./models/student");
 const Alumni = require("./models/alumni");
+const connectionRoutes = require("./routes/connection")
+const User = require("./models/user");
 
 config()
 
@@ -32,7 +33,6 @@ app.set("views", "views");
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
 
 
 
@@ -99,7 +99,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(userAppRoutes);
-
+app.use("/api/connection", connectionRoutes)
 app.use(errorController.get404);
 
 mongoose

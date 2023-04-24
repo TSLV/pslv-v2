@@ -149,8 +149,8 @@ exports.getDetails = (req,res,next)=>{
     .catch(err => {
       console.log(err);
     })
-  
 }
+
 exports.postDetails = (req,res,next) => {
   const userId = req.body.userId;
   const role = req.body.role;
