@@ -29,9 +29,9 @@ exports.getDashboard = async (req,res,next)=>{
     const userRole = req.user.role;
     const studentPost = await StudentPost.find().populate("user").exec();
     const alumniPost = await AlumniPost.find().populate("user").exec();
-
+    
     const posts = [...studentPost, ...alumniPost];
-
+    
     posts.sort((a,b)=>{
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
@@ -41,9 +41,9 @@ exports.getDashboard = async (req,res,next)=>{
         const temp1 = []
         for(var user of post.postResponse.likes.users) {
             const temp = await User.findById(user.userId)
-            console.log(temp);
+            console.log("user", user)
             if(temp.role === "student") {
-                temp1.push(await Student.findOne({ user: temp._id }))
+                temp1.push(await Student.findOne({ user: user }))
             }
             else if(temp.role === "alumni"){
                 temp1.push(await Alumni.findOne({ user: temp._id }))
@@ -326,7 +326,7 @@ exports.getNetwork = async (req, res, next) => {
     const alumniData = []
     const studentsData = []
     if(alumni.length) {
-       alumniData.push(...(await Alumni.find({ user:{ $in: alumni }})))
+       alumniData.push(...(await Alumni.find({ user: { $in: alumni }})))
     }
     if(students.length) {
         studentsData.push(...(await Student.find({ user: { $in: students }})))
@@ -349,8 +349,16 @@ exports.getNetwork = async (req, res, next) => {
         requestData.push(request)
     })
     const suggestions = []
-    suggestions.push(...(await Student.find({ user: {$ne: req.user._id, $nin: connectedUsers.students }})))
-    suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id, $nin: connectedUsers.alumni }})))
+    const temp = []
+    for(const connection of connections) {
+        for(const user of connection.users) {
+            if(!temp.includes(user._id) && String(user._id) !== String(req.user._id)) {
+                temp.push(user._id)
+            }
+        }
+    }
+    suggestions.push(...(await Student.find({ user: { $ne: req.user._id, $nin: temp }})))
+    suggestions.push(...(await Alumni.find({ user: { $ne: req.user._id, $nin: temp }})))
     res.render("userApp/network", {
         user: req.userType,
         requests: requestData,
@@ -542,6 +550,17 @@ exports.postInterest = async(req,res,next)=>{
     }
 }
 
+exports.getAdmin = async (req,res,next) => {
+    // if(req.user.role !== "admin") {
+    //     return res.redirect("/home")
+    // }
+    try {
+        res.render("userApp/admin");
+    } catch (error) {
+        console.log(error);
+    }
+   
+}
 exports.postAbout = async(req,res,next)=>{
     const about = await About.findOne({user: req.user})
     const newAbout = req.body.about
