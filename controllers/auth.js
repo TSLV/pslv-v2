@@ -154,7 +154,6 @@ exports.getDetails = (req,res,next)=>{
 exports.postDetails = (req,res,next) => {
   const userId = req.body.userId;
   const role = req.body.role;
-  console.log(role);
   const firstname = req.body.firstName;
   const lastname = req.body.lastName;
   const age = req.body.age;
@@ -172,7 +171,6 @@ exports.postDetails = (req,res,next) => {
   const bio = req.body.bio;
   const profileImageUrl = req.body.profileImage;
 
-  console.log(dob);
   const contact = new Contact({
     phone: +phone,
     email: email,
