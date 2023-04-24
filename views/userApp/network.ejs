@@ -170,11 +170,6 @@
                 <small><%= reqUser.bio %></small>
               </div>
             </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <input style="display: none;" name="from" value="<%= user.user %>">
-            <input style="display: none;" name="to" value="<%= reqUser.user %>">
-            <input style="display: none;" name="type" value="MUTUAL">
-            <button type="submit">Connect</button>
           </div>
         </form>
       <%}%>
