@@ -9,6 +9,7 @@ const AlumniPost = require("../models/alumnipost");
 const Contact = require("../models/contact");
 const Skills = require("../models/skills");
 const Interests = require("../models/interest");
+const About = require("../models/about");
 const { Tokenizer } = require("../utils");
 const request = require("../models/request");
 const connection = require("../models/connection");
@@ -33,7 +34,7 @@ exports.getDashboard = async (req,res,next)=>{
     posts.sort((a,b)=>{
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
-
+    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
     var likesArray = []
     for(var post of posts) {
         const temp1 = []
@@ -70,7 +71,8 @@ exports.getDashboard = async (req,res,next)=>{
             user: userStudent,
             role: userRole,
             posts: likesArray,
-            users: Tokenizer.shuffle(users)
+            users: Tokenizer.shuffle(users),
+            connection:connections.length
         });
     }
     else if(userRole === 'alumni'){
@@ -79,7 +81,8 @@ exports.getDashboard = async (req,res,next)=>{
             user: userAlumni,
             role: userRole,
             posts: likesArray,
-            users: Tokenizer.shuffle(users)
+            users: Tokenizer.shuffle(users),
+            connection:connections.length
         });
     }
     
@@ -355,6 +358,8 @@ exports.getProfile = async(req, res, next) => {
         userType = await (user.role==="student"?Student:Alumni).findOne({ user: user._id})
     }
     const role = user.role;
+    const about = await About.findOne({user: user._id});
+    const aboutData = about ? about.about : ''
     const contact = await Contact.findOne({user: user._id})
     const address = await Address.findOne({user: user._id})
     const skillsData = await Skills.findOne({user: user._id})
@@ -390,7 +395,8 @@ exports.getProfile = async(req, res, next) => {
       others: req.params.userId ? true : false,
       users,
       postImpression,
-      connection: connections.length
+      connection: connections.length,
+      aboutData
     });
   };
 
@@ -524,3 +530,73 @@ exports.postInterest = async(req,res,next)=>{
         res.redirect('/profile');
     }
 }
+
+exports.postAbout = async(req,res,next)=>{
+    const about = await About.findOne({user: req.user})
+    const newAbout = req.body.about
+    if(about){
+        about.about = newAbout;
+        await about.save();
+        res.redirect('/profile');
+    }
+    else{
+        const aboutData = new About({
+            about: newAbout,
+            user: new ObjectId(req.user)
+        })
+        await aboutData.save();
+        console.log('about posted');
+        res.redirect('/profile');
+    }
+}
+
+exports.getNotification = async(req,res,next)=>{
+    const studentPost = await StudentPost.find().populate("user").exec();
+    const alumniPost = await AlumniPost.find().populate("user").exec();
+
+    const posts = [...studentPost, ...alumniPost];
+    posts.sort((a,b)=>{
+        return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+    res.render('userApp/notifications',{
+        user: req.userType,
+        posts: posts,
+    });
+}
+exports.getJobs = async(req,res,next) => {
+    res.render('userApp/jobs',{
+        user: req.userType
+    })
+}
+
+exports.getMessages = async(req,res,next) => {
+    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
+    const connectionData = {
+        students: [],
+        alumni: []
+    }
+    connections.forEach(connection => {
+        for(const user of connection.users) {
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+        }
+    })
+    const connectedUsers = []
+    connectedUsers.push(...(await Student.find({ user: { $in: connectionData.students, $ne: req.user._id }})))
+    connectedUsers.push(...(await Alumni.find({ user: { $in: connectionData.alumni, $ne: req.user._id }})))
+    res.render('userApp/messages',{
+        user: req.userType,
+        connectedUsers
+    })
+}
+
