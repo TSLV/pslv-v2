@@ -524,3 +524,12 @@ exports.postInterest = async(req,res,next)=>{
         res.redirect('/profile');
     }
 }
+
+exports.getAdmin = async(req,res,next) =>{
+    try {
+        res.render("userApp/admin");
+    } catch (error) {
+        console.log(error);
+    }
+   
+}
