@@ -540,14 +540,6 @@ exports.postInterest = async(req,res,next)=>{
     }
 }
 
-exports.getAdmin = async(req,res,next) =>{
-    try {
-        res.render("userApp/admin");
-    } catch (error) {
-        console.log(error);
-    }
-   
-}
 exports.postAbout = async(req,res,next)=>{
     const about = await About.findOne({user: req.user})
     const newAbout = req.body.about
@@ -570,18 +562,20 @@ exports.postAbout = async(req,res,next)=>{
 exports.getNotification = async(req,res,next)=>{
     const studentPost = await StudentPost.find().populate("user").exec();
     const alumniPost = await AlumniPost.find().populate("user").exec();
-
+    const jobNotification = await Job.find().populate('user').exec()
     const posts = [...studentPost, ...alumniPost];
     posts.sort((a,b)=>{
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
     res.render('userApp/notifications',{
         user: req.userType,
+        usermain: req.user,
         posts: posts,
+        jobNotification
     });
 }
 exports.getJobs = async(req,res,next) => {
-    const jobs = await Job.find({user: req.user})
+    const jobs = await Job.find({user: req.userType})
     const allJobs = await Job.find({})
     const alumnis = await Alumni.find();
     res.render('userApp/jobs',{
@@ -610,7 +604,7 @@ exports.postJobs = async(req,res,next) => {
         type: jobtype,
         salary: jobsalary,
         skills: jobskills,
-        user: new ObjectId(req.user)
+        user: new ObjectId(req.userType)
     })
     await job.save();
     res.redirect('/jobs')

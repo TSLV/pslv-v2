@@ -34,7 +34,7 @@ const jobSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "Alumni",
   },
 });
 

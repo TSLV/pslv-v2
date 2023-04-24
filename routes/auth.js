@@ -13,5 +13,6 @@ router.get('/details/:userId', authController.getDetails);
 router.post('/details', authController.postDetails);
 router.get('/role/:userId', authController.getRole);
 router.post('/role', authController.postRole);
+router.get('/admin', authController.getAdmin);
 
 module.exports = router;
