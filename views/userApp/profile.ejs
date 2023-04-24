@@ -80,6 +80,12 @@
           </div>
           <p class="connection-info"><%= connection %> connections</p>
         </div>
+        <%if(usermain.role === 'student'){%>
+          <form action="">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="submitButton">Apply For Alumni</button>
+          </form>
+        <%}%>
       </div>
     </div>
     <div class="profile-card card">
@@ -127,74 +133,42 @@
       </div>
     </div>
     <div class="profile-card card">
-      <div class="analytics-title section-title">
-        <div style="font-size: 22px; font-weight: bold">Resources</div>
-        <div style="display: flex; align-items: center; gap: 3px">
-          <span class="material-symbols-rounded" style="font-size: 15px"
-            >visibility</span
-          >
-          <div style="font-size: 12px">Private for you</div>
-        </div>
-      </div>
-      <div class="resource-container">
-        <div class="resource-main">
-          <div>
-            <span class="material-symbols-rounded">group_add</span>
-          </div>
-          <div>
-            <div style="font-size: 18px">My network</div>
-            <div style="font-size: 12px">
-              See and manage your connections and interests.
-            </div>
-          </div>
-        </div>
-        <div class="resource-main">
-          <div>
-            <span class="material-symbols-rounded">article</span>
-          </div>
-          <div>
-            <div style="font-size: 18px">Activity</div>
-            <div style="font-size: 12px">
-              See what you've shared with your network, such as posts, articles,
-              and comments.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="profile-card card">
       <div class="about-title section-title">
         <div style="font-size: 22px; font-weight: bold">About</div>
-        <div>
-          <span class="material-symbols-rounded about-edit">edit</span>
-        </div>
+        <%if(!others){%>
+          <div>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#aboutModal" class="linkStyle"><span class="material-symbols-rounded about-edit">edit</span></a>
+          </div>
+        <%}%>
       </div>
-      <div class="about-description" style="font-size: 12px">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt illo
-        doloribus, eos, laborum quibusdam totam labore similique alias nam
-        adipisci culpa natus inventore magnam! Magni, inventore! Illum corrupti
-        odit numquam.
+      <div class="about-description" style="font-size: 20px">
+        <%=aboutData !== '' ? aboutData : 'Add About so that people can know you better'%>
       </div>
     </div>
-    <div class="profile-card card">
-      <div class="about-title section-title">
-        <div>
-          <div style="font-size: 22px; font-weight: bold">Activity</div>
-          <div style="font-size: 12px">567 followers</div>
-        </div>
-        <div>
-          <button class="text-button" style="background-color: transparent">
-            Start a post
-          </button>
+    <div class="modal fade" style="color: black;" id="aboutModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Your About</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/add-about" method="post">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">About</label>
+                <textarea class="form-control" name="about" rows="3"><%=aboutData !== '' ? aboutData : ''%></textarea>
+              </div>
+              <button type="submit" class="btn submitButton" style="width: 100%;">Add About</button>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
-      <div style="font-size: 12px">
-        Random Person commented on a post
-        <span style="font-size: 15px">•</span> 3mo
-      </div>
-      <div style="font-size: 15px">random.person@gmail.com</div>
     </div>
-    <%if(usermain.role == "alumni"){%>
+    <%if(usermain.role === "alumni"){%>
       <div class="profile-card card">
         <div class="about-title section-title">
           <div style="font-size: 22px; font-weight: bold">Working</div>
@@ -216,14 +190,6 @@
     <div class="profile-card card">
       <div class="about-title section-title">
         <div style="font-size: 22px; font-weight: bold">Education</div>
-        <!-- <div style="display: flex; flex-direction: row; gap: 2rem">
-          <div>
-            <span class="material-symbols-rounded about-edit">add</span>
-          </div>
-          <div>
-            <span class="material-symbols-rounded about-edit">edit</span>
-          </div>
-        </div> -->
       </div>
       <div class="education-container">
         <div class="education-main">
