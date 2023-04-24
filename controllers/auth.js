@@ -20,7 +20,34 @@ exports.getLogin = (req, res, next) => {
     errorMessage: message,
   });
 };
-
+exports.getAdminLogin = (req,res,next)=>{
+  let message = req.flash('error');
+  if(message.length > 0){
+    message = message[0];
+  }
+  else{
+    message = null;
+  }
+  console.log(req.session.isLoggedIn);
+  res.render('auth/adminLogin', {
+    errorMessage: message,
+  });
+}
+exports.postAdminLogin = (req,res,next)=> {
+  const email = req.body.email;
+  const password = req.body.password;
+  if(email === "admin@admin.com" && password === "admin"){
+    req.session.isLoggedIn = true;
+    req.session.save(err => {
+      res.redirect('/admin');
+      console.log(err);
+    })
+  }
+  else{
+    req.flash('error', 'Invalid Login Credentials');
+    res.redirect('/admin-login');
+  }
+}
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;

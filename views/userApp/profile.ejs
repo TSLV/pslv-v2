@@ -79,13 +79,17 @@
             </div>
           </div>
           <p class="connection-info"><%= connection %> connections</p>
+          
+          <%if(usermain.role === 'alumni'){%>
+            <p class="connection-info"><%= job%> Jobs posted</p>
+          <%}%>
         </div>
-        <%if(usermain.role === 'student' && !others){%>
+        <!-- <%if(usermain.role === 'student' && !others){%>
           <form action="">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="submitButton">Apply For Alumni</button>
           </form>
-        <%}%>
+        <%}%> -->
       </div>
     </div>
     <div class="profile-card card">

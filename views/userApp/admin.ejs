@@ -1,16 +1,15 @@
 <%-include(`../includes/start.ejs`)%>
 <div class="admin-nav">
-    <img src="/images/avatar-default.png" alt="mascot" class="logoImg">
     <h1 class="admin-h1">Admin</h1>
 </div>
 
 <div class="main-container">
   <div class="container-left admin-container">
-    <form action="">
+    <form action="/news">
       <h1>Post News</h1>
       <textarea name="newsText" id="newsText" cols="30" rows="10" placeholder="New Updates"></textarea
       ><br />
-      <button class="btn btn-lg btn-outline">Post</button>
+      <button type="submit" class="btn btn-lg btn-outline">Post</button>
     </form>
   </div>
 

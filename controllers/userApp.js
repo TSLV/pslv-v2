@@ -375,6 +375,7 @@ exports.getProfile = async(req, res, next) => {
     const skills = skillsData ? skillsData.skills : [];
     const interestData = await Interests.findOne({user: user._id})
     const interests = interestData ? interestData.interests : [];
+    const jobs = await Job.find({user: req.userType})
     var post;
     if(role === 'student'){
         post = await StudentPost.find({ user: userType._id })
@@ -405,7 +406,8 @@ exports.getProfile = async(req, res, next) => {
       users,
       postImpression,
       connection: connections.length,
-      aboutData
+      aboutData,
+      job: jobs.length
     });
   };
 
