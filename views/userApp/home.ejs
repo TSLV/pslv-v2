@@ -146,12 +146,6 @@
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button class="linkButton" type="submit"><i class="fa-regular fa-thumbs-up"></i> Like</i></button>
             </form>
-            <!-- <form action="/comment" method="post">
-              <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
-              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button class="linkButton" type="submit"><i class="fa-regular fa-comment"></i> Comment</button>
-            </form> -->
             <div class="specialLink">
               <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal<%= post.postDetails._id %>"><i class="fa-regular fa-comment"></i> Comment</a>
             </div>

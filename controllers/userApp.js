@@ -41,6 +41,7 @@ exports.getDashboard = async (req,res,next)=>{
         const temp1 = []
         for(var user of post.postResponse.likes.users) {
             const temp = await User.findById(user.userId)
+            console.log(temp);
             if(temp.role === "student") {
                 temp1.push(await Student.findOne({ user: temp._id }))
             }
@@ -573,10 +574,14 @@ exports.getNotification = async(req,res,next)=>{
 }
 exports.getJobs = async(req,res,next) => {
     const jobs = await Job.find({user: req.user})
+    const allJobs = await Job.find({})
+    const alumnis = await Alumni.find();
     res.render('userApp/jobs',{
         user: req.userType,
         usermain: req.user,
-        jobs
+        jobs,
+        alumnis,
+        allJobs
     })
 }
 

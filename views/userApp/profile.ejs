@@ -80,7 +80,7 @@
           </div>
           <p class="connection-info"><%= connection %> connections</p>
         </div>
-        <%if(usermain.role === 'student'){%>
+        <%if(usermain.role === 'student' && !others){%>
           <form action="">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="submitButton">Apply For Alumni</button>

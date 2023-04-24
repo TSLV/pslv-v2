@@ -90,7 +90,7 @@
             <div class="userProfile networkUserProfile">
               <div class="profileImgPost">
                 <img
-                  src="<%= request.from.data.imageUrl %>"
+                  src=<%= request.from.data.imageUrl || "/images/avatar-default.png" %>
                   alt="profileImg"
                 />
               </div>
@@ -161,7 +161,7 @@
         <p>Your connections</p>
       </div>
       <% for(const reqUser of connectedUsers) {%>
-        <form action="/api/connection/create" method="post">
+        <a href="/profile/<%= reqUser.user %>">
           <div class="connectSuggestion">
             <div class="connectProfile">
               <img src="<%= reqUser.imageUrl %>" alt="personImg" />
@@ -171,7 +171,7 @@
               </div>
             </div>
           </div>
-        </form>
+        </a>
       <%}%>
     </div>
   </div>
