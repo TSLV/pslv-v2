@@ -4,11 +4,13 @@ const { CONNECTION_TYPES } = require("./utils");
 module.exports = model("request", new Schema({
     from: {
         type: Schema.Types.ObjectId,
-        required: [true, "The sender of the connection request is required"]
+        required: [true, "The sender of the connection request is required"],
+        ref: "User"
     },
     to: {
         type: Schema.Types.ObjectId,
-        required: [true, "The receiver of the connection request is required"]
+        required: [true, "The receiver of the connection request is required"],
+        ref: "User"
     },
     type: {
         type: String,

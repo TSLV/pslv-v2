@@ -7,6 +7,8 @@ const Student = require("../models/student");
 const StudentPost = require("../models/studentpost");
 const AlumniPost = require("../models/alumnipost");
 const Contact = require("../models/contact");
+const { Tokenizer } = require("../utils");
+const request = require("../models/request");
 
 exports.getIndex = (req, res, next) => {
   if(req.session.isLoggedIn){
@@ -15,6 +17,7 @@ exports.getIndex = (req, res, next) => {
   else{
     res.render("userApp/index");
   }
+  
 };
 
 exports.getDashboard = async (req,res,next)=>{
@@ -54,12 +57,17 @@ exports.getDashboard = async (req,res,next)=>{
         likesArray.push({postDetails: post, userDetails: temp1, commentDetails})
         // likesArray.map(doc => doc.commentDetails.map(cmnt => ))
     }
+
+    const users = []
+    users.push(...(await Student.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    users.push(...(await Alumni.find({ user: {$ne: req.user._id }}).limit(4).exec()))
     if(userRole === 'student'){
         const userStudent = await Student.findOne({user: req.user});
         res.render('userApp/home', {
             user: userStudent,
             role: userRole,
             posts: likesArray,
+            users: Tokenizer.shuffle(users)
         });
     }
     else if(userRole === 'alumni'){
@@ -68,10 +76,12 @@ exports.getDashboard = async (req,res,next)=>{
             user: userAlumni,
             role: userRole,
             posts: likesArray,
+            users: Tokenizer.shuffle(users)
         });
     }
-
+    
 }
+
 exports.postPost = (req,res,next)=>{
     const caption = req.body.caption;
     const imageUrl = req.body.imageUrl;
@@ -113,7 +123,7 @@ exports.postPost = (req,res,next)=>{
             })
             .catch(err => console.log(err))
     }
-
+    
 }
 
 exports.postLikes = (req,res,next) => {
@@ -139,6 +149,7 @@ exports.postLikes = (req,res,next) => {
             })
             .catch(err => console.log(err))
     }
+    
 }
 
 exports.postComments = (req,res,next) => {
@@ -165,11 +176,59 @@ exports.postComments = (req,res,next) => {
             })
             .catch(err => console.log(err))
     }
+    
 }
 
-exports.getNetwork = (req, res, next) => {
-  res.render("userApp/network", {
-    user: req.userType,
-  });
+exports.getNetwork = async (req, res, next) => {
+    let requests = await request.find({ type: "MUTUAL", to: req.user._id }).populate(["from", "to"]).exec()
+    const alumni = []
+    const students = []
+    requests.forEach(request => {
+        if(request.from.role === "alumni" && !alumni.includes(request.from._id)) {
+            alumni.push(request.from._id)
+        }
+        if(request.from.role === "student" && !students.includes(request.from._id)) {
+            students.push(request.from._id)
+        }
+        if(request.to.role === "alumni" && !alumni.includes(request.to._id)) {
+            alumni.push(request.to._id)
+        }
+        if(request.to.role === "student" && !students.includes(request.to._id)) {
+            students.push(request.to._id)
+        }
+    })
+    const alumniData = []
+    const studentsData = []
+    if(alumni.length) {
+       alumniData.push(...(await Alumni.find({ user:{ $in: alumni }})))
+    }
+    if(students.length) {
+        studentsData.push(...(await Student.find({ user: { $in: students }})))
+    }
+    const requestData = []
+    requests.forEach(__request => {
+        let request = __request._doc
+        if(request.from.role === "alumni") {
+            request.from = {...request.from._doc, data: alumniData.filter((e) => String(e.user) === String(request.from._id))[0]}
+        }
+        if(request.to.role === "alumni") {
+            request.to = {...request.to._doc, data: alumniData.filter((e) => String(e.user) === String(request.to._id))[0]}
+        }
+        if(request.from.role === "student") {
+            request.from = {...request.from._doc, data: studentsData.filter((e) => String(e.user) === String(request.from._id))[0]}
+        }
+        if(request.to.role === "student") {
+            request.to = {...request.to._doc, data: studentsData.filter((e) => String(e.user) === String(request.to._id))[0]}
+        }
+        requestData.push(request)
+    })
+    const suggestions = []
+    suggestions.push(...(await Student.find({ user: {$ne: req.user._id }})))
+    suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id }})))
+    console.log(suggestions)
+    res.render("userApp/network", {
+        user: req.userType,
+        requests: requestData,
+        suggestions
+    });
 };
-

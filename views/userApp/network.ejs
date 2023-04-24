@@ -83,246 +83,75 @@
   <div class="rightNetworkContent content">
     <div class="card">
       <div class="networkHead">
-        <p>Invitations</p>
-        <a href="#">See all 18</a>
+        <p>Connection Requests</p>
       </div>
-      <div class="invitation">
-        <div class="userProfile networkUserProfile">
-          <div class="profileImgPost">
-            <img
-              src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
-              alt="profileImg"
-            />
+      <% for(const request of requests) { %>
+          <div class="invitation">
+            <div class="userProfile networkUserProfile">
+              <div class="profileImgPost">
+                <img
+                  src="<%= request.from.data.imageUrl %>"
+                  alt="profileImg"
+                />
+              </div>
+              <div class="userInfo">
+                <h5><%= request.from.data.firstname %> <%= request.from.data.lastname %></h5>
+                <p><%= request.from.data.bio %></p>
+              </div>
+            </div>
+            <div class="networkOption">
+              <form action="/api/connection/rejectRequest" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input style="display: none;" name="from" value=<%= request.from._id %>>
+                <input style="display: none;" name="to" value=<%= ""+request.to._id %>>
+                <input style="display: none;" name="type" value="MUTUAL">
+                <button class="noborderButton">Ignore</button>
+              </form>
+              <form action="/api/connection/acceptRequest" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input style="display: none;" name="from" value="<%= request.from._id %>">
+                <input style="display: none;" name="to" value=<%= request.to._id %>>
+                <input style="display: none;" name="type" value="MUTUAL">
+                <button class="text-button">Accept</button>
+              </form>
+            </div>
           </div>
-          <div class="userInfo">
-            <h5>Tushar Pathak</h5>
-            <p>IIITS | CSE | 2025</p>
-          </div>
-        </div>
-        <div class="networkOption">
-          <button class="noborderButton">Ignore</button>
-          <button class="text-button">Accept</button>
-        </div>
-      </div>
-      <div class="invitation">
-        <div class="userProfile networkUserProfile">
-          <div class="profileImgPost">
-            <img
-              src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
-              alt="profileImg"
-            />
-          </div>
-          <div class="userInfo">
-            <h5>Tushar Pathak</h5>
-            <p>IIITS | CSE | 2025</p>
-          </div>
-        </div>
-        <div class="networkOption">
-          <button class="noborderButton">Ignore</button>
-          <button class="text-button">Accept</button>
-        </div>
-      </div>
-      <div class="invitation">
-        <div class="userProfile networkUserProfile">
-          <div class="profileImgPost">
-            <img
-              src="https://media.licdn.com/dms/image/C4E03AQFvrWS9EkYORA/profile-displayphoto-shrink_100_100/0/1637419778853?e=1681948800&v=beta&t=YaRilhsIphDz5-2mkB4joH2yrbiVgzzIxmuKAw4Ri7E"
-              alt="profileImg"
-            />
-          </div>
-          <div class="userInfo">
-            <h5>Tushar Pathak</h5>
-            <p>IIITS | CSE | 2025</p>
-          </div>
-        </div>
-        <div class="networkOption">
-          <button class="noborderButton">Ignore</button>
-          <button class="text-button">Accept</button>
-        </div>
-      </div>
-      <div class="showAllGroup">
-        <a href="#">Show All <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
+      <%}%>
     </div>
     <div class="card">
       <h5>Suggestions for you</h5>
       <div class="suggestedConnection">
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
+        <% for(const suggestion of suggestions) {%>
+          <div class="card profileCard suggestedCard">
+            <div class="cover"></div>
+            <div class="profileInfo">
+              <img
+                src="<%= suggestion.imageUrl %>"
+                alt="profileImg"
+                class="profileImg"
+              />
+              <strong class="userName"><%= suggestion.firstname %> <%= suggestion.lastname %></strong>
+              <small class="userProfession"><%= suggestion.bio %></small>
+              <span><%= suggestion.institute %></span>
+            </div>
+            <!-- <div class="connection">
+              <strong>12</strong>
+              <small>Mutual Connections</small>
+              <span><a href="#">connect with alumni</a></span>
+            </div> -->
+            <div>
+              <form action="/api/connection/create" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input style="display: none;" name="from" value="<%= user.user %>">
+                <input style="display: none;" name="to" value="<%= suggestion.user %>">
+                <input style="display: none;" name="type" value="MUTUAL">
+                <button class="text-button">
+                  <i class="fa-solid fa-user-plus"></i> Connect
+                </button>
+              </form>
+            </div>
           </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">
-              <i class="fa-solid fa-user-plus"></i> Connect
-            </button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">
-              <i class="fa-solid fa-user-plus"></i> Connect
-            </button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">
-              <i class="fa-solid fa-user-plus"></i> Connect
-            </button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">
-              <i class="fa-solid fa-user-plus"></i> Connect
-            </button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">Connect</button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">Connect</button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">Connect</button>
-          </div>
-        </div>
-        <div class="card profileCard suggestedCard">
-          <div class="cover"></div>
-          <div class="profileInfo">
-            <img
-              src="/images/picture.jpeg"
-              alt="profileImg"
-              class="profileImg"
-            />
-            <strong class="userName">Random Name</strong>
-            <small class="userProfession">Full Stack Developer</small>
-            <span>IIIT SRI CITY</span>
-          </div>
-          <div class="connection">
-            <strong>12</strong>
-            <small>Mutual Connections</small>
-            <!-- <span><a href="#">connect with alumni</a></span> -->
-          </div>
-          <div>
-            <button class="text-button">Connect</button>
-          </div>
-        </div>
+        <%}%>
       </div>
     </div>
   </div>

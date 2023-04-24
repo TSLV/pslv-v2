@@ -20,49 +20,27 @@
       </div>
     </div>
     <div class="card left-group">
-      <h5>Connect with more people .....</h5>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
+      <h5>Connect with more people.....</h5>
+      <% for(const reqUser of users) {%>
+        <form action="/api/connection/create" method="post">
+          <div class="connectSuggestion">
+            <div class="connectProfile">
+              <img src="<%= reqUser.imageUrl %>" alt="personImg" />
+              <div class="connectInfo">
+                <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
+                <small><%= reqUser.bio %></small>
+              </div>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input style="display: none;" name="from" value="<%= user.user %>">
+            <input style="display: none;" name="to" value="<%= reqUser.user %>">
+            <input style="display: none;" name="type" value="MUTUAL">
+            <button type="submit">Connect</button>
           </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
-      <div class="connectSuggestion">
-        <div class="connectProfile">
-          <img src="/images/example-person.jpeg" alt="personImg" />
-          <div class="connectInfo">
-            <strong>Random Name</strong>
-            <small>Android Developer</small>
-          </div>
-        </div>
-        <button>Connect</button>
-      </div>
+        </form>
+      <%}%>
       <div class="specialLink">
-        <a href="#">Show More</a>
+        <a href="/network">Show More</a>
       </div>
     </div>
   </div>
@@ -335,5 +313,4 @@
     </div>
   </div>
 </div>
-
-<%-include(`../includes/end.ejs`)%>
+<%- include(`../includes/end.ejs`) %>
