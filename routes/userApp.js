@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/', appController.getIndex);
 router.get('/home', isAuth, appController.getDashboard);
 router.get('/network', isAuth, appController.getNetwork);
+router.get('/profile/:userId', isAuth, appController.getProfile);
 router.get('/profile', isAuth, appController.getProfile);
 router.get('/edit-details', isAuth, appController.getEditProfile);
 router.get('/edit-posts', isAuth, appController.getEditPost);
