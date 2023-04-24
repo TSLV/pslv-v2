@@ -9,6 +9,7 @@ const AlumniPost = require("../models/alumnipost");
 const Contact = require("../models/contact");
 const { Tokenizer } = require("../utils");
 const request = require("../models/request");
+const connection = require("../models/connection");
 
 exports.getIndex = (req, res, next) => {
   if(req.session.isLoggedIn){
@@ -225,11 +226,36 @@ exports.getNetwork = async (req, res, next) => {
     const suggestions = []
     suggestions.push(...(await Student.find({ user: {$ne: req.user._id }})))
     suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id }})))
-    console.log(suggestions)
+
+    const connections = await connection.find({ users: { $in: [req.user._id]}}).populate("users").exec()
+    const connectionData = {
+        students: [],
+        alumni: []
+    }
+    connections.forEach(connection => {
+        for(const user of connection.users) {
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+            if(user.role === "alumni" && !connectionData.alumni.includes(user._id)) {
+                connectionData.alumni.push(user._id)
+            }
+            if(user.role === "student" && !connectionData.students.includes(user._id)) {
+                connectionData.students.push(user._id)
+            }
+        }
+    })
+    const connectedUsers = []
+    connectedUsers.push(...(await Student.find({ user: { $in: connectionData.students, $ne: req.user._id }})))
+    connectedUsers.push(...(await Alumni.find({ user: { $in: connectionData.alumni, $ne: req.user._id }})))
     res.render("userApp/network", {
         user: req.userType,
         requests: requestData,
-        suggestions
+        suggestions,
+        connectedUsers
     });
 };
 

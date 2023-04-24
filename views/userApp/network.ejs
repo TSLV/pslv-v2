@@ -80,7 +80,7 @@
     <%-include(`../includes/footer.ejs`)%> 
 
   </div>
-  <div class="rightNetworkContent content">
+  <div class="centerNetworkContainer content">
     <div class="card">
       <div class="networkHead">
         <p>Connection Requests</p>
@@ -153,6 +153,31 @@
           </div>
         <%}%>
       </div>
+    </div>
+  </div>
+  <div class="rightNetworkContainer content">
+    <div class="card left-group">
+      <div class="networkHead">
+        <p>Your connections</p>
+      </div>
+      <% for(const reqUser of connectedUsers) {%>
+        <form action="/api/connection/create" method="post">
+          <div class="connectSuggestion">
+            <div class="connectProfile">
+              <img src="<%= reqUser.imageUrl %>" alt="personImg" />
+              <div class="connectInfo">
+                <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
+                <small><%= reqUser.bio %></small>
+              </div>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input style="display: none;" name="from" value="<%= user.user %>">
+            <input style="display: none;" name="to" value="<%= reqUser.user %>">
+            <input style="display: none;" name="type" value="MUTUAL">
+            <button type="submit">Connect</button>
+          </div>
+        </form>
+      <%}%>
     </div>
   </div>
 </main>

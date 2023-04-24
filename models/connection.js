@@ -7,6 +7,7 @@ module.exports = model("connection", new Schema({
         validate: {
             validator: (users) => users.length === 2,
             message: "Only 2 users can be connected with each other"
-        }
+        },
+        ref: "User"
     }
 }))
