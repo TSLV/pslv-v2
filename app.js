@@ -99,8 +99,8 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-app.use(userAppRoutes);
 app.use(companyRoutes);
+app.use(userAppRoutes);
 app.use("/api/connection", connectionRoutes)
 app.use(errorController.get404);
 
