@@ -1245,7 +1245,7 @@ a:hover {
 
 /* Jobs */
 .job-container {
-  grid-template-columns: 0.6fr 2.5fr 1fr;
+  grid-template-columns: 1.5fr 1.5fr 1fr;
   color: #cacaca;
 }
 
@@ -1408,4 +1408,24 @@ a:hover {
   color: white;
   background-color: #1b2730;
   font-size: 1.5rem;
+}
+
+.jobForm{
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px 1px lightgray;
+}
+.jobLabel{
+  display: block;
+  margin-bottom: 5px;
+}
+.jobInput{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
