@@ -393,7 +393,7 @@ a:hover {
 }
 .networkContainer {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: .8fr 2fr .8fr;
   width: 90%;
   margin: 0 auto;
   margin-top: 7rem;
