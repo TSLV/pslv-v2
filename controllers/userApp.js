@@ -324,7 +324,7 @@ exports.getNetwork = async (req, res, next) => {
     const alumniData = []
     const studentsData = []
     if(alumni.length) {
-       alumniData.push(...(await Alumni.find({ user:{ $in: alumni }})))
+       alumniData.push(...(await Alumni.find({ user: { $in: alumni }})))
     }
     if(students.length) {
         studentsData.push(...(await Student.find({ user: { $in: students }})))
@@ -347,8 +347,16 @@ exports.getNetwork = async (req, res, next) => {
         requestData.push(request)
     })
     const suggestions = []
-    suggestions.push(...(await Student.find({ user: {$ne: req.user._id, $nin: connectedUsers.students }})))
-    suggestions.push(...(await Alumni.find({ user: {$ne: req.user._id, $nin: connectedUsers.alumni }})))
+    const temp = []
+    for(const connection of connections) {
+        for(const user of connection.users) {
+            if(!temp.includes(user._id) && String(user._id) !== String(req.user._id)) {
+                temp.push(user._id)
+            }
+        }
+    }
+    suggestions.push(...(await Student.find({ user: { $ne: req.user._id, $nin: temp }})))
+    suggestions.push(...(await Alumni.find({ user: { $ne: req.user._id, $nin: temp }})))
     res.render("userApp/network", {
         user: req.userType,
         requests: requestData,
