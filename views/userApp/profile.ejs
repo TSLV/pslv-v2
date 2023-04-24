@@ -4,10 +4,10 @@
   <div class="container-main">
     <div class="card profileCard-profile">
       <div class="cover"></div>
-      <span class="material-symbols-rounded cover-edit">edit</span>
+      <a href="/edit-details"><span class="material-symbols-rounded cover-edit">edit</span></a>
       <div class="profileInfo">
         <img
-          src="/images/picture.jpeg"
+          src="<%= user.imageUrl %>"
           alt="profileImg"
           class="profileImg"
         />
@@ -15,34 +15,74 @@
       <div class="profileDetails">
         <div class="personal">
           <div class="edit-title">
-            <h3>Random Name</h3>
-            <span class="material-symbols-rounded profile-edit">edit</span>
+            <h3><%= user.firstname %> <%= user.lastname%> ( <span style="text-transform: capitalize;"><%= usermain.role%></span> )</h3>
+            <!-- <span class="material-symbols-rounded profile-edit">edit</span> -->
           </div>
           <p class="personalDescription">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt alias
-            quidem cum neque necessitatibus quia eius, quis cupiditate? Totam,
-            voluptate?
+            <%= user.bio %>
           </p>
           <p class="location-info">
-            Address something something something something
+            <a href="#" data-bs-toggle="modal" data-bs-target="#addressModal" class="linkStyle">Address</a>
             <span style="font-size: 15px">•</span>
-            <a href="#" class="linkStyle">Contact Info</a>
+            <a href="#" class="linkStyle" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Info</a>
           </p>
+          <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Contact Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-2">
+                    Email : <%= contact.email %>
+                  </div>
+                  <div class="mb-2">
+                    Phone : <%= contact.phone %>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Address Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-2">
+                    address : <%= address.address %>
+                  </div>
+                  <div class="mb-2">
+                    city : <%= address.city %>
+                  </div>
+                  <div class="mb-2">
+                    pincode : <%= address.pincode %>
+                  </div>
+                  <div class="mb-2">
+                    state : <%= address.state %>
+                  </div>
+                  <div class="mb-2">
+                    country : <%= address.country %>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Education at <%= user.institute %> (<%= user.joinYear %> - <%= user.passYear %>)</p>
+          <%if(usermain.role == "alumni"){%>
+            <p>Working at <%= user.workplace %></p>
+          <%}%>
           <p class="connection-info">567 connections</p>
-        </div>
-        <div class="work">
-          <div class="jobContainer">
-            <img src="/media/logo/logo.png" width="20px" height="20px" />
-            <div>Company 1</div>
-          </div>
-          <div class="jobContainer">
-            <img src="/media/logo/logo.png" width="20px" height="20px" />
-            <div>Company 1</div>
-          </div>
-          <div class="jobContainer">
-            <img src="/media/logo/logo.png" width="20px" height="20px" />
-            <div>Company 1</div>
-          </div>
         </div>
       </div>
     </div>
@@ -62,7 +102,7 @@
             <span class="material-symbols-rounded">group</span>
           </div>
           <div style="font-size: 20px; text-decoration: none">
-            <a href="#" class="linkStyle">60 profile views</a>
+            <a href="#" class="linkStyle"><%= post.length %> Posts</a>
             <div style="font-size: 12px">Discover who viewed your profile.</div>
           </div>
         </div>

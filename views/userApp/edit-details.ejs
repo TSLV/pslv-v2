@@ -1,0 +1,57 @@
+<%-include(`../includes/start.ejs`)%> 
+<main class="mainFormContainer">
+    <h1>Get Started With Mascot</h1>
+    <section class="formSection">
+        <div class="formImgContainer">
+            <img src="/images/connected-world.png" alt="connected-world">
+        </div>
+        <div class="formContainer card">
+            <% if(role === "student") {%>
+                <form action="/edit-details" id="detailForm" method="post">
+                    <div class="twoInput">
+                        <input type="text" class="firstName" name="firstName" placeholder="First Name" value="<%= user.firstname %>">
+                        <input type="text" class="lastName" name="lastName" placeholder="Last Name" value="<%= user.lastname %>">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="age" name="age" placeholder="Age" value="<%= user.age %>">
+                        <input type="date" class="dob" name="dob" value="<%= dob %>">
+                    </div>
+                    <%-include(`../includes/contact.ejs`,{editing: true})%>
+                    <%-include(`../includes/institute.ejs`,{editing: true})%>
+                    <%-include(`../includes/address.ejs`,{editing: true})%>
+                    <div class="oneInput">
+                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL" value="<%= user.imageUrl %>">
+                    </div>
+                    <!-- <small id="errorPara" style="color: red;"></small> -->
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="submitButton" id="detailButton">Edit</button>
+                </form>
+            <% } else if(role === "alumni") {%>
+                <form action="/edit-details" id="detailForm" method="post">
+                    <div class="twoInput">
+                        <input type="text" class="firstName" name="firstName" placeholder="First Name" value="<%= user.firstname %>">
+                        <input type="text" class="lastName" name="lastName" placeholder="Last Name" value="<%= user.lastname %>">
+                    </div>
+                    <div class="twoInput">
+                        <input type="number" class="age" name="age" placeholder="Age" value="<%= user.age %>">
+                        <input type="date" class="dob" name="dob" value="<%= dob %>">
+                    </div>
+                    <%-include(`../includes/contact.ejs`,{editing: true})%>
+                    <%-include(`../includes/institute.ejs`,{editing: true})%>
+                    <div class="oneInput">
+                        <input type="text" class="workplace" name="workplace" placeholder="Workplace" value="<%=user.workplace%>">
+                    </div>
+                    <%-include(`../includes/address.ejs`,{editing: true})%>
+                    <div class="oneInput">
+                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL" value="<%= user.imageUrl %>">
+                    </div>
+                    <!-- <small id="errorPara" style="color: red;"></small> -->
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="submitButton" id="detailButton">Edit</button>
+                </form>
+            <% }%>
+        </div>
+    </section>
+</main>
+<script src="/scripts/details.js"></script>
+<%-include(`../includes/end.ejs`)%> 

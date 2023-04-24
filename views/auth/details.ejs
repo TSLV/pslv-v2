@@ -16,9 +16,9 @@
                         <input type="number" class="age" name="age" placeholder="Age">
                         <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
                     </div>
-                    <%-include(`../includes/contact.ejs`)%>
-                    <%-include(`../includes/institute.ejs`)%>
-                    <%-include(`../includes/address.ejs`)%>
+                    <%-include(`../includes/contact.ejs`,{editing: false})%>
+                    <%-include(`../includes/institute.ejs`,{editing: false})%>
+                    <%-include(`../includes/address.ejs`,{editing: false})%>
                     <div class="oneInput">
                         <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL">
                     </div>
@@ -38,12 +38,12 @@
                         <input type="number" class="age" name="age" placeholder="Age">
                         <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
                     </div>
-                    <%-include(`../includes/contact.ejs`)%>
-                    <%-include(`../includes/institute.ejs`)%>
+                    <%-include(`../includes/contact.ejs`, {editing: false})%>
+                    <%-include(`../includes/institute.ejs`, {editing: false})%>
                     <div class="oneInput">
                         <input type="text" class="workplace" name="workplace" placeholder="Workplace">
                     </div>
-                    <%-include(`../includes/address.ejs`)%>
+                    <%-include(`../includes/address.ejs`, {editing: false})%>
                     <div class="oneInput">
                         <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL">
                     </div>
@@ -52,35 +52,6 @@
                     <input type="hidden" name="userId" value="<%= userId %>">
                     <input type="hidden" name="role" value="<%= role %>">
                     <button type="submit" class="submitButton" id="detailButton">Submit</button>
-                </form>
-            <% }else{ %>
-                <form action="/details" id="detailForm" method="post">
-                    <div class="twoInput">
-                        <input type="text" class="firstName" id="firstName" placeholder="First Name">
-                        <input type="text" class="lastName" id="lastName" placeholder="Last Name">
-                    </div>
-                    <div class="twoInput">
-                        <input type="number" class="age" id="age" placeholder="Age">
-                        <input type="date" class="dob" id="dob" placeholder="Date Of Birth">
-                    </div>
-                    <div class="oneInput">
-                        <input type="text" class="address" id="address" placeholder="Address">
-                    </div>
-                    <div class="twoInput">
-                        <input type="number" class="pin-code" id="pin-code" placeholder="Pin-Code">
-                        
-                    </div>
-                    <div class="oneInput">
-                        <input type="text" class="institute" id="institute" placeholder="Institute/Workplace">
-                    </div>
-                    <div class="oneInput">
-                        <textarea name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio"></textarea>
-                    </div>
-                    <!-- <small id="errorPara" style="color: red;"></small> -->
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <input type="hidden" name="userId" value="<%= userId %>">
-                    <input type="hidden" name="role" value="<%= role %>">
-                    <button type="button" class="submitButton" id="detailButton">Submit</button>
                 </form>
             <% } %>
         </div>

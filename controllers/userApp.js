@@ -232,3 +232,121 @@ exports.getNetwork = async (req, res, next) => {
         suggestions
     });
 };
+
+exports.getProfile = async(req, res, next) => {
+    const role = req.user.role;
+    const contact = await Contact.findOne({user: req.user})
+    const address = await Address.findOne({user: req.user})
+    var post;
+    if(role === 'student'){
+        post = await StudentPost.find({user: req.userType})
+    }
+    else if(role === 'alumni'){
+        post = await AlumniPost.find({user: req.userType})
+    }
+    res.render("userApp/profile", {
+      user: req.userType,
+      usermain: req.user,
+      contact,
+      address,
+      post
+    });
+  };
+
+exports.getEditProfile = async(req,res,next) =>{
+    const contact = await Contact.findOne({user: req.user})
+    const address = await Address.findOne({user: req.user})
+    const dateString = req.userType.dob;
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    const formattedDate = `${year.toString()}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    res.render("userApp/edit-details", {
+        user: req.userType,
+        role: req.user.role,
+        address,
+        contact,
+        dob: formattedDate
+    })
+}
+exports.postEditProfile = async(req,res,next)=> {
+  const role = req.user.role;
+  const firstname = req.body.firstName;
+  const lastname = req.body.lastName;
+  const age = req.body.age;
+  const dob = req.body.dob;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const instituteName = req.body.instituteName;
+  const joinYear = req.body.joinYear;
+  const passYear = req.body.passYear;
+  const address = req.body.address;
+  const city = req.body.city;
+  const pincode = req.body.pinCode;
+  const state = req.body.state;
+  const country = req.body.country;
+  const bio = req.body.bio;
+  const profileImageUrl = req.body.profileImage;
+
+  const contact = await Contact.findOne({user: req.user})
+  contact.email = email;
+  contact.phone = phone;
+  await contact.save();
+
+  const address_data = await Address.findOne({user: req.user})
+  address_data.address = address;
+  address_data.city = city;
+  address_data.pincode = pincode;
+  address_data.state = state;
+  address_data.country = country;
+  await address_data.save();
+
+    if(role === "alumni"){
+      const workplace = req.body.workplace;
+      Alumni.findOne({user:req.user})
+        .then(al=> {
+            al.firstname = firstname
+            al.lastname = lastname
+            al.age = +age
+            al.dob = new Date(dob)
+            al.institute = instituteName
+            al.joinYear = +joinYear
+            al.passYear = +passYear
+            al.bio = bio
+            al.workplace = workplace
+            al.imageUrl = profileImageUrl
+
+            return al.save();
+        })
+        .then(result => {
+            console.log('Details updated');
+            res.redirect('/profile')
+        })
+        .catch(err => console.log(err))
+    }
+    
+    else if(role === "student"){
+        Student.findOne({user:req.user})
+        .then(st=> {
+            st.firstname = firstname
+            st.lastname = lastname
+            st.age = +age
+            st.dob = new Date(dob)
+            st.institute = instituteName
+            st.joinYear = +joinYear
+            st.passYear = +passYear
+            st.bio = bio
+            st.imageUrl = profileImageUrl
+
+            return st.save();
+        })
+        .then(result => {
+            console.log('Details updated');
+            res.redirect('/profile')
+        })
+        .catch(err => console.log(err))
+    }
+}
+
