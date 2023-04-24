@@ -68,12 +68,8 @@ exports.postLogin = (req, res, next) => {
           req.session.user = user;
           console.log(req.session)
           req.session.save(err => {
-<<<<<<< HEAD
-            res.redirect((req.session.user.role==="admin")?"/admin":"/home");
-=======
             res.redirect('/home');
             console.log(err);
->>>>>>> b4e003b9b299cae0fb1140c9fdfb132022cf40aa
           })
         })
         .catch(err => {

@@ -23,10 +23,6 @@ router.post('/add-about', isAuth, appController.postAbout);
 router.post('/post', isAuth, appController.postPost);
 router.post('/comment', isAuth, appController.postComments);
 router.post('/like', isAuth, appController.postLikes);
-<<<<<<< HEAD
-router.get('/admin', appController.getAdmin);
-=======
 router.post('/post-job', isAuth, appController.postJobs);
->>>>>>> b4e003b9b299cae0fb1140c9fdfb132022cf40aa
 
 module.exports = router;
