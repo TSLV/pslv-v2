@@ -62,10 +62,17 @@ exports.getDashboard = async (req,res,next)=>{
         likesArray.push({postDetails: post, userDetails: temp1, commentDetails})
         // likesArray.map(doc => doc.commentDetails.map(cmnt => ))
     }
-
     const users = []
-    users.push(...(await Student.find({ user: {$ne: req.user._id }}).limit(4).exec()))
-    users.push(...(await Alumni.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    const connectedUsers = []
+    for(const connection of connections) {
+        for(const user of connection.users) {
+            if(!connectedUsers.includes(user._id) && String(user._id) !== String(req.user._id)) {
+                connectedUsers.push(user._id)
+            }
+        }
+    }
+    users.push(...(await Student.find({ user: {$ne: req.user._id, $nin: connectedUsers }}).limit(4).exec()))
+    users.push(...(await Alumni.find({ user: {$ne: req.user._id, $nin: connectedUsers  }}).limit(4).exec()))
     if(userRole === 'student'){
         const userStudent = await Student.findOne({user: req.user});
         res.render('userApp/home', {

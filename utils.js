@@ -72,7 +72,4 @@ class Tokenizer {
         return array
     }
 }
-
-
-
 exports.Tokenizer = Tokenizer
