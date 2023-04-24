@@ -29,9 +29,9 @@ exports.getDashboard = async (req,res,next)=>{
     const userRole = req.user.role;
     const studentPost = await StudentPost.find().populate("user").exec();
     const alumniPost = await AlumniPost.find().populate("user").exec();
-
+    
     const posts = [...studentPost, ...alumniPost];
-
+    
     posts.sort((a,b)=>{
         return new Date(b.timestamp) - new Date(a.timestamp);
     });
@@ -41,8 +41,9 @@ exports.getDashboard = async (req,res,next)=>{
         const temp1 = []
         for(var user of post.postResponse.likes.users) {
             const temp = await User.findById(user.userId)
+            console.log("user", user)
             if(temp.role === "student") {
-                temp1.push(await Student.findOne({ user: temp._id }))
+                temp1.push(await Student.findOne({ user: user }))
             }
             else if(temp.role === "alumni"){
                 temp1.push(await Alumni.findOne({ user: temp._id }))
@@ -547,7 +548,10 @@ exports.postInterest = async(req,res,next)=>{
     }
 }
 
-exports.getAdmin = async(req,res,next) =>{
+exports.getAdmin = async (req,res,next) => {
+    // if(req.user.role !== "admin") {
+    //     return res.redirect("/home")
+    // }
     try {
         res.render("userApp/admin");
     } catch (error) {

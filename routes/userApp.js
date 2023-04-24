@@ -23,6 +23,6 @@ router.post('/add-about', isAuth, appController.postAbout);
 router.post('/post', isAuth, appController.postPost);
 router.post('/comment', isAuth, appController.postComments);
 router.post('/like', isAuth, appController.postLikes);
-router.get('/admin', isAuth, appController.getAdmin);
+router.get('/admin', appController.getAdmin);
 
 module.exports = router;
