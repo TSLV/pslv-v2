@@ -363,6 +363,10 @@ exports.getProfile = async(req, res, next) => {
     else if(role === 'alumni'){
         post = await AlumniPost.find({user: req.userType})
     }
+    var postImpression = 0;
+    for(var i of post){
+        postImpression += i.postResponse.likes.numLikes + i.postResponse.comments.length;
+    }
     res.render("userApp/profile", {
       user: req.userType,
       usermain: req.user,
@@ -370,7 +374,8 @@ exports.getProfile = async(req, res, next) => {
       address,
       post,
       skills,
-      interests
+      interests,
+      postImpression
     });
   };
 
