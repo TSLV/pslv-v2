@@ -540,6 +540,14 @@ exports.postInterest = async(req,res,next)=>{
     }
 }
 
+exports.getAdmin = async(req,res,next) =>{
+    try {
+        res.render("userApp/admin");
+    } catch (error) {
+        console.log(error);
+    }
+   
+}
 exports.postAbout = async(req,res,next)=>{
     const about = await About.findOne({user: req.user})
     const newAbout = req.body.about
