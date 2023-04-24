@@ -1,0 +1,292 @@
+<%-include(`../includes/start.ejs`)%> 
+<%-include(`../includes/nav.ejs`)%> 
+<main class="mainContainer">
+  <div class="left-content content">
+    <div class="card profileCard">
+      <div class="cover"></div>
+      <div class="profileInfo">
+        <img src="<%= user.imageUrl %>" alt="profileImg" class="profileImg" />
+        <strong class="userName"><%= user.firstname %> <%= user.lastname %> <span style="text-transform: capitalize;">( <%= role %> )</span></strong>
+        <small class="userProfession"><%= user.bio %></small>
+        <span><%= user.institute %></span>
+      </div>
+      <div class="connection">
+        <strong>6645</strong>
+        <small>Connections</small>
+        <!-- <span><a href="#">connect with alumni</a></span> -->
+      </div>
+      <div class="specialLink">
+        <a href="/profile">My Profile</a>
+      </div>
+    </div>
+    <div class="card left-group">
+      <h5>Connect with more people.....</h5>
+      <% for(const reqUser of users) {%>
+        <form action="/api/connection/create" method="post">
+          <div class="connectSuggestion">
+            <div class="connectProfile">
+              <img src="<%= reqUser.imageUrl %>" alt="personImg" />
+              <div class="connectInfo">
+                <strong><%= reqUser.firstname %> <%= reqUser.lastname %></strong>
+                <small><%= reqUser.bio %></small>
+              </div>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input style="display: none;" name="from" value="<%= user.user %>">
+            <input style="display: none;" name="to" value="<%= reqUser.user %>">
+            <input style="display: none;" name="type" value="MUTUAL">
+            <button type="submit">Connect</button>
+          </div>
+        </form>
+      <%}%>
+      <div class="specialLink">
+        <a href="/network">Show More</a>
+      </div>
+    </div>
+  </div>
+  <div class="center-content content">
+    <% if (posts.length > 0) { %>
+      <% for (let post of posts) { %>
+        <div class="card">
+          <div class="userProfile">
+            <div class="profileImgPost">
+              <img
+                src="<%= post.postDetails.user.imageUrl %>"
+                alt="profileImg"
+              />
+            </div>
+            <div class="userInfo">
+              <h5><%= post.postDetails.user.firstname %> <%= post.postDetails.user.lastname %></h5>
+              <p><%= post.postDetails.user.bio %></p>
+            </div>
+          </div>
+          <div class="caption">
+            <p><%= post.postDetails.caption %></p>
+          </div>
+          <% if(post.postDetails.imageUrl) {%>
+            <div class="imagePost">
+              <img
+                src="<%= post.postDetails.imageUrl %>"
+                alt="post"
+              />
+            </div>
+          <% } %>
+          <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+            <div class="specialLink">
+              <a href="#"
+              data-bs-toggle="modal" data-bs-target="#likeModal<%= post.postDetails._id %>"><%= post.postDetails.postResponse.likes.numLikes %> Likes</a
+              >
+            </div>
+          </div>
+          <div class="modal fade" id="likeModal<%= post.postDetails._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><%= post.postDetails.postResponse.likes.numLikes %> Likes</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="allLikes" style="display: flex;flex-direction: column;">
+                    <% if (post.userDetails.length > 0) { %>
+                      <% for(let postUser of post.userDetails){ %>
+                        <div class="userProfile">
+                          <div class="profileImgPost">
+                            <img
+                              src="<%= postUser.imageUrl %>"
+                              alt="profileImg"
+                            />
+                          </div>
+                          <div class="userInfo">
+                            <h5><%= postUser.firstname %> <%= postUser.lastname %></h5>
+                            <p><%= postUser.bio %></p>
+                          </div>
+                        </div>
+                      <%}%>
+                    <%} else {%>
+                      <h1>No Likes Yet</h1>
+                    <%}%>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="actionBar">
+            <form action="/like" method="post">
+              <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="linkButton" type="submit"><i class="fa-regular fa-thumbs-up"></i> Like</i></button>
+            </form>
+            <!-- <form action="/comment" method="post">
+              <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="linkButton" type="submit"><i class="fa-regular fa-comment"></i> Comment</button>
+            </form> -->
+            <div class="specialLink">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal<%= post.postDetails._id %>"><i class="fa-regular fa-comment"></i> Comment</a>
+            </div>
+            <div class="modal fade" id="commentModal<%= post.postDetails._id %>" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true" style="color: black;">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="allLikes" style="display: flex;flex-direction: column;">
+                      <div class="postBox">
+                        <div class="profileImgPost">
+                          <img src="<%= user.imageUrl %>" alt="profileImg" />
+                        </div>
+                        <form action="/comment" method="post" style="display: flex; justify-content: space-between; gap: 1rem; width: 100%;">
+                          <input type="text" name="comment" placeholder="Add a comment" style="border: 1px solid black; width: 100%;"/>
+                          <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+                          <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button type="submit" class="submitButton" style="padding: 1rem; border-radius: 50%;"><i class="fa-sharp fa-solid fa-paper-plane"></i></button>
+                        </form>
+                      </div>
+                      <% if (post.commentDetails.length > 0) { %>
+                        <% for(let postUser of post.commentDetails){ %>
+                          <div class="userProfile">
+                            <div class="profileImgPost">
+                              <img
+                                src="<%= postUser.commentUser.imageUrl %>"
+                                alt="profileImg"
+                              />
+                            </div>
+                            <div class="userInfo" style="border-radius: 10px; background-color: rgb(231, 231, 231); padding: 0.25rem 0.5rem; width: 80%;">
+                              <h6 style="color: rgb(129, 129, 129); margin: 0;"><%= postUser.commentUser.firstname %> <%= postUser.commentUser.lastname %></h6>
+                              <p style="color: rgb(129, 129, 129);font-size: 0.75rem;"><%= postUser.commentUser.bio %></p>
+                              <p style="margin-top: 1rem;"><%= postUser.comment %></p>
+                            </div>
+                          </div>
+                        <%}%>
+                      <%} else {%>
+                        <h1>No Comments Yet</h1>
+                      <%}%>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form action="/edit-posts" method="post">
+                <input type="hidden" name="targetPost" value="<%= post.postDetails._id %>">
+              <input type="hidden" name="postedby" value="<%= post.postDetails.postedby %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="linkButton" type="submit"><i class="fa-solid fa-trash"></i> Delete</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    <% } else { %>
+      <h1 style="color: white;">You have not posted anything!!</h1>
+    <% } %>
+  </div>
+  <div class="right-content content">
+    <div class="card">
+      <h5>Mascot News</h5>
+      <ul class="newsSection">
+        <li>
+          <i class="fa-solid fa-circle"></i> Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Voluptatem, nostrum.
+        </li>
+        <li>
+          <i class="fa-solid fa-circle"></i> Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Voluptatem, nostrum.
+        </li>
+        <li>
+          <i class="fa-solid fa-circle"></i> Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Voluptatem, nostrum.
+        </li>
+        <li>
+          <i class="fa-solid fa-circle"></i> Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Voluptatem, nostrum.
+        </li>
+        <li>
+          <i class="fa-solid fa-circle"></i> Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Voluptatem, nostrum.
+        </li>
+      </ul>
+      <div class="specialLink">
+        <a href="#">Show More</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="upperCard">
+        <div class="specialLink">
+          <a href="/group">Groups</a>
+        </div>
+        <div class="specialLink">
+          <a href="/events">Events</a>
+        </div>
+        <div class="specialLink">
+          <a href="#">Followed Hashtags</a>
+        </div>
+      </div>
+      <div class="discover">
+        <a href="#">Discover More</a>
+      </div>
+    </div>
+    <%-include(`../includes/footer.ejs`)%> 
+  </div>
+</main>
+<!-- Photo Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a Photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/post" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">What's in your mind</label>
+            <input type="text" class="form-control" name="caption" >
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Image URL</label>
+            <input type="text" class="form-control" name="imageUrl">
+          </div>
+          <button type="submit" class="btn submitButton" style="width: 100%;">Post</button>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Write an Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/post" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">What's in your mind</label>
+            <textarea class="form-control" name="caption" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn submitButton" style="width: 100%;">Post</button>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include(`../includes/end.ejs`) %>

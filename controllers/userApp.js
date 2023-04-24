@@ -7,6 +7,8 @@ const Student = require("../models/student");
 const StudentPost = require("../models/studentpost");
 const AlumniPost = require("../models/alumnipost");
 const Contact = require("../models/contact");
+const Skills = require("../models/skills");
+const Interests = require("../models/interest");
 const { Tokenizer } = require("../utils");
 const request = require("../models/request");
 
@@ -80,6 +82,93 @@ exports.getDashboard = async (req,res,next)=>{
         });
     }
     
+}
+
+exports.getEditPost = async (req,res,next)=>{
+    const userRole = req.user.role;
+    let posts = []
+    if(userRole === 'student'){
+        posts = await StudentPost.find({user:req.userType}).populate("user").exec();
+    }
+    else if(userRole === 'alumni'){
+        posts = await AlumniPost.find({user:req.userType}).populate("user").exec();
+    }
+
+    // const posts = [...studentPost, ...alumniPost];
+
+    posts.sort((a,b)=>{
+        return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+
+    var likesArray = []
+    for(var post of posts) {
+        const temp1 = []
+        for(var user of post.postResponse.likes.users) {
+            const temp = await User.findById(user.userId)
+            if(temp.role === "student") {
+                temp1.push(await Student.findOne({ user: temp._id }))
+            }
+            else if(temp.role === "alumni"){
+                temp1.push(await Alumni.findOne({ user: temp._id }))
+            }
+        }
+        var commentDetails = []
+        for(var comment of post.postResponse.comments){
+            const textComment = comment.comment;
+            const temp = await User.findById(comment.userId);
+            if(temp.role === "student"){
+                commentDetails.push({comment:textComment, commentUser: await Student.findOne({ user: temp._id })})
+            }
+            else if(temp.role === "alumni"){
+                commentDetails.push({comment:textComment, commentUser: await Alumni.findOne({ user: temp._id })})
+            }
+        }
+        likesArray.push({postDetails: post, userDetails: temp1, commentDetails})
+        // likesArray.map(doc => doc.commentDetails.map(cmnt => ))
+    }
+
+    const users = []
+    users.push(...(await Student.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    users.push(...(await Alumni.find({ user: {$ne: req.user._id }}).limit(4).exec()))
+    if(userRole === 'student'){
+        const userStudent = await Student.findOne({user: req.user});
+        res.render('userApp/edit-post', {
+            user: userStudent,
+            role: userRole,
+            posts: likesArray,
+            users: Tokenizer.shuffle(users)
+        });
+    }
+    else if(userRole === 'alumni'){
+        const userAlumni = await Alumni.findOne({user: req.user});
+        res.render('userApp/edit-post', {
+            user: userAlumni,
+            role: userRole,
+            posts: likesArray,
+            users: Tokenizer.shuffle(users)
+        });
+    }
+    
+}
+
+exports.postEditPost = async(req,res,next) => {
+    const targetPost = req.body.targetPost;
+    const postedby = req.body.postedby;
+    console.log(targetPost);
+    if(postedby === 'student'){
+        StudentPost.findByIdAndRemove(targetPost)
+            .then(stpost=>{
+                res.redirect('/edit-posts')
+            })
+            .catch(err => console.log(err))
+    }
+    else if(postedby === 'alumni'){
+        AlumniPost.findByIdAndRemove(targetPost)
+            .then(result => {
+                res.redirect('/edit-posts')
+            })
+            .catch(err => console.log(err))
+    }
 }
 
 exports.postPost = (req,res,next)=>{
@@ -237,6 +326,10 @@ exports.getProfile = async(req, res, next) => {
     const role = req.user.role;
     const contact = await Contact.findOne({user: req.user})
     const address = await Address.findOne({user: req.user})
+    const skillsData = await Skills.findOne({user: req.user})
+    const skills = skillsData ? skillsData.skills : [];
+    const interestData = await Interests.findOne({user: req.user})
+    const interests = interestData ? interestData.interests : [];
     var post;
     if(role === 'student'){
         post = await StudentPost.find({user: req.userType})
@@ -249,7 +342,9 @@ exports.getProfile = async(req, res, next) => {
       usermain: req.user,
       contact,
       address,
-      post
+      post,
+      skills,
+      interests
     });
   };
 
@@ -350,3 +445,36 @@ exports.postEditProfile = async(req,res,next)=> {
     }
 }
 
+exports.postSkill = async(req,res,next)=>{
+    const skills = await Skills.findOne({user: req.user})
+    const newSkill = req.body.skill;
+    if(skills){
+        await skills.addSkill(newSkill);
+        res.redirect('/profile')
+    }
+    else{
+        const skillData = new Skills({
+            skills: [newSkill],
+            user: new ObjectId(req.user)
+        })
+        await skillData.save();
+        res.redirect('/profile');
+    }
+}
+
+exports.postInterest = async(req,res,next)=>{
+    const interests = await Interests.findOne({user: req.user})
+    const newInterest = req.body.skill;
+    if(interests){
+        await interests.addInterest(newInterest);
+        res.redirect('/profile')
+    }
+    else{
+        const interestData = new Interests({
+            interests: [newInterest],
+            user: new ObjectId(req.user)
+        })
+        await interestData.save();
+        res.redirect('/profile');
+    }
+}

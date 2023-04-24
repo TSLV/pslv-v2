@@ -10,6 +10,7 @@ const compression = require("compression");
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const userAppRoutes = require("./routes/userApp");
+const companyRoutes = require("./routes/company");
 const errorController = require("./controllers/error");
 const Student = require("./models/student");
 const Alumni = require("./models/alumni");
@@ -99,6 +100,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(userAppRoutes);
+app.use(companyRoutes);
 app.use("/api/connection", connectionRoutes)
 app.use(errorController.get404);
 
