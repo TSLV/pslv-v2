@@ -5,7 +5,7 @@ const Address = require('../models/address')
 const Alumni = require('../models/alumni')
 const Student = require('../models/student')
 const Contact = require('../models/contact')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -279,5 +279,17 @@ exports.getAdmin = async(req,res,next) =>{
   } catch (error) {
       console.log(error);
   }
- 
 }
+
+exports.searchMail = async (req, res, next) => {
+  const data = req.query.email
+  if(!data.length) {
+    return res.status(200).send([])
+  }
+  const emails = await User.find({ email: data }).select("email")
+  console.log("emails", emails)
+  if(!emails || !emails.length) {
+    return res.status(400).send("Email doesn't exist")
+  }
+  res.status(200).send("Email exists. Try to login")
+} 

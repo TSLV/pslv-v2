@@ -3,7 +3,7 @@ const express = require('express');
 const authController = require('../controllers/auth');
 const adminController = require('../controllers/admin')
 
-const router = express.Router();
+const router = express.Router("/auth");
 
 router.get('/login', authController.getLogin);
 router.post('/login', authController.postLogin);
@@ -18,5 +18,6 @@ router.get('/admin', authController.getAdmin);
 router.get('/admin-login', authController.getAdminLogin);
 router.post('/admin-login', authController.postAdminLogin);
 router.post('/news', adminController.postNews);
+router.get('/searchMail', authController.searchMail)
 
 module.exports = router;
