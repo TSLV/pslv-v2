@@ -60,11 +60,15 @@ function validatePassword() {
   var passwordHelp = document.getElementById("password--help");
   var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
+  if(!passwordInput.value.length) {
+    passwordHelp.textContent = ""
+  }
+
   if (!pattern.test(passwordInput.value)) {
-    passwordHelp.textContent = "Invalid password. Password must meet the criteria.";
+    passwordHelp.textContent = "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character";
     passwordHelp.style.color = "red";
   } else {
-    passwordHelp.textContent = ""; // Clear the help message if the password is valid
+    passwordHelp.textContent = ""; 
   }
 }
 
