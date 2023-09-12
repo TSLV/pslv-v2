@@ -33,21 +33,21 @@
             <% } else if(role === "alumni") {%>
                 <form action="/details" id="detailForm" method="post">
                     <div class="twoInput">
-                        <input type="text" class="firstName" name="firstName" placeholder="First Name">
-                        <input type="text" class="lastName" name="lastName" placeholder="Last Name">
+                        <input type="text" class="firstName" name="firstName" placeholder="First Name" required>
+                        <input type="text" class="lastName" name="lastName" placeholder="Last Name" required>
                     </div>
                     <div class="twoInput">
-                        <input type="number" class="age" name="age" placeholder="Age">
-                        <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
+                        <input type="number" class="age" name="age" placeholder="Age" required>
+                        <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();" required>
                     </div>
                     <%-include(`../includes/contact.ejs`, {editing: false})%>
                     <%-include(`../includes/institute.ejs`, {editing: false})%>
                     <div class="oneInput">
-                        <input type="text" class="workplace" name="workplace" placeholder="Workplace">
+                        <input type="text" class="workplace" name="workplace" placeholder="Workplace" required>
                     </div>
                     <%-include(`../includes/address.ejs`, {editing: false})%>
                     <div class="oneInput">
-                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL">
+                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL" required>
                     </div>
                     <!-- <small id="errorPara" style="color: red;"></small> -->
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
