@@ -32,7 +32,58 @@ document.getElementById("input--password").addEventListener("blur", () => {
   if (document.getElementById("input--password").value === "") {
     document.getElementById("label--password").classList.remove("transform");
   }
+  else {
+    const passwordHelp = document.getElementById("password--help")
+    if(!e.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+      passwordHelp.innerText = "Invalid Password. Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      return
+    }
+    else {
+      passwordHelp.innerText = ""
+    }
+  }
 });
+
+document.getElementById("input--password").onchange((e) => {
+  const passwordHelp = document.getElementById("password--help")
+  if(!e.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+    passwordHelp.innerText = "Invalid Password. Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+    return
+  }
+  else {
+    passwordHelp.innerText = ""
+  }
+})
+
+function validatePassword() {
+  var passwordInput = document.getElementById("input--password");
+  var passwordHelp = document.getElementById("password--help");
+  var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!pattern.test(passwordInput.value)) {
+    passwordHelp.textContent = "Invalid password. Password must meet the criteria.";
+    passwordHelp.style.color = "red";
+  } else {
+    passwordHelp.textContent = ""; // Clear the help message if the password is valid
+  }
+}
+
+// document.getElementById("signup--form").onsubmit((e) => {
+//   // e.preventDefault()
+//   const xhr = new XMLHttpRequest()
+//   xhr.open("POST", "/signup", true)
+//   const email = document.getElementById("input--email").value
+//   const password = document.getElementById("input--password").value
+//   if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+//     passwordHelp.innerText = "Invalid Password. Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+//     return
+//   }
+//   else {
+//     passwordHelp.innerText = ""
+//     xhr.send(JSON.stringify({ email, password }))
+//   }
+// })
+
 // const regex =
 //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 // let emailError = false;
