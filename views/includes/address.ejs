@@ -1,14 +1,20 @@
 <div class="oneInput">
-    <input type="text" class="address" name="address" placeholder="Address" value="<% if(editing) { %><%=address.address %><%}%>" required>
+    <input type="text" id="address" name="address" placeholder="Address" value="<% if(editing) { %><%=address.address %><%}%>" required>
 </div>
 <div class="twoInput">
-    <input type="text" class="city" name="city" placeholder="City" value="<% if(editing) { %><%=address.city%><%}%>" required>  
-    <input type="number" class="pin-code" name="pinCode" placeholder="Pin-Code" value="<% if(editing) { %><%=address.pincode %><%}%>" required>  
+    <div class="w-100">
+        <input type="text" id="city" name="city" placeholder="City" value="<% if(editing) { %><%=address.city%><%}%>" required>  
+    </div>
+    <div class="w-100">
+        <input type="number" id="pin-code" name="pinCode" placeholder="Pin-Code" value="<% if(editing) { %><%=address.pincode %><%}%>" required>  
+        <p id="pinError" style="color: red;"></p>
+    </div>
 </div>
 <div class="twoInput">
-    <input type="text" class="state" name="state" placeholder="State" value="<% if(editing) { %><%=address.state %><%}%>" required>  
-    <input type="text" class="country" name="country" placeholder="Country" value="<% if(editing) { %><%=address.country %><%}%>" required>  
+    <input type="text" id="state" name="state" placeholder="State" value="<% if(editing) { %><%=address.state %><%}%>" required>  
+    <input type="text" id="country" name="country" placeholder="Country" value="<% if(editing) { %><%=address.country %><%}%>" required>  
 </div>
 <div class="oneInput">
-    <textarea name="bio" name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio" required><% if(editing) { %><%=user.bio %><%}%></textarea>
+    <textarea name="bio" id="bio" cols="30" rows="5" placeholder="Write a brief about your bio" required><% if(editing) { %><%=user.bio %><%}%></textarea>
 </div>
+<script src="/scripts/details.js"></script>

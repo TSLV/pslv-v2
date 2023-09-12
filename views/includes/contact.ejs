@@ -1,4 +1,11 @@
 <div class="twoInput">
-    <input type="text" class="email" name="email" placeholder="Email" value="<% if(editing) { %><%=contact.email %><%}%>" required>  
-    <input type="number" class="phone" name="phone" placeholder="Phone Number" value="<% if(editing) { %><%=contact.phone%><%}%>" required>  
+    <div class="w-100">
+        <input type="text" id="email" name="email" placeholder="Email" value="<% if(editing) { %><%=contact.email %><%}%>" required>  
+        <p id="emailError" style="color: red;"></p>
+    </div>
+    <div class="w-100">
+        <input type="number" id="phone" name="phone" placeholder="Phone Number" value="<% if(editing) { %><%=contact.phone%><%}%>" required>  
+        <p id="phoneError" style="color: red;"></p>
+    </div>
 </div>
+<script src="/scripts/details.js"></script>

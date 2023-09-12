@@ -11,18 +11,30 @@
 
                 <form action="/details" id="detailForm" method="post">
                     <div class="twoInput">
-                        <input type="text" class="firstName" name="firstName" placeholder="First Name" required>
-                        <input type="text" class="lastName" name="lastName" placeholder="Last Name" required>
+                        <div class="w-100">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                            <p style="color: red;" id="firstNameError"></p>
+                        </div>
+                        <div class="w-100">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                            <p style="color: red;" id="lastNameError"></p>
+                        </div>
                     </div>
                     <div class="twoInput">
-                        <input type="number" class="age" name="age" placeholder="Age" required>
-                        <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();" required>
+                        <div class="w-100">
+                            <input type="number" id="age" name="age" placeholder="Age">
+                            <p style="color: red;" id="ageError"></p>
+                        </div>
+                        <div class="w-100">
+                            <input type="text" id="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
+                            <p style="color: red;" id="dobError"></p>
+                        </div>
                     </div>
                     <%-include(`../includes/contact.ejs`,{editing: false})%>
                     <%-include(`../includes/institute.ejs`,{editing: false})%>
                     <%-include(`../includes/address.ejs`,{editing: false})%>
                     <div class="oneInput">
-                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL" required>
+                        <input type="text" id="profileImage" name="profileImage" placeholder="Profile Image URL" required>
                     </div>
                     <!-- <small id="errorPara" style="color: red;"></small> -->
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -33,23 +45,35 @@
             <% } else if(role === "alumni") {%>
                 <form action="/details" id="detailForm" method="post">
                     <div class="twoInput">
-                        <input type="text" class="firstName" name="firstName" placeholder="First Name">
-                        <input type="text" class="lastName" name="lastName" placeholder="Last Name">
+                        <div class="w-100">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                            <p style="color: red;" id="firstNameError"></p>
+                        </div>
+                        <div class="w-100">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                            <p style="color: red;" id="lastNameError"></p>
+                        </div>
                     </div>
                     <div class="twoInput">
-                        <input type="number" class="age" name="age" placeholder="Age">
-                        <input type="text" class="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
+                        <div class="w-100">
+                            <input type="number" id="age" name="age" placeholder="Age">
+                            <p style="color: red;" id="ageError"></p>
+                        </div>
+                        <div class="w-100">
+                            <input type="text" id="dob" name="dob" placeholder="Date Of Birth" onfocus="this.type = 'date'; this.setAttribute('onfocus','');this.blur();this.focus();">
+                            <p style="color: red;" id="dobError"></p>
+                        </div>
                     </div>
                     <%-include(`../includes/contact.ejs`, {editing: false})%>
                     <%-include(`../includes/institute.ejs`, {editing: false})%>
                     <div class="oneInput">
-                        <input type="text" class="workplace" name="workplace" placeholder="Workplace">
+                        <input type="text" id="workplace" name="workplace" placeholder="Workplace">
                     </div>
                     <%-include(`../includes/address.ejs`, {editing: false})%>
                     <div class="oneInput">
-                        <input type="text" class="profileImage" name="profileImage" placeholder="Profile Image URL">
+                        <input type="text" id="profileImage" name="profileImage" placeholder="Profile Image URL">
                     </div>
-                    <!-- <small id="errorPara" style="color: red;"></small> -->
+                    <small id="errorPara" style="color: red;"></small>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="userId" value="<%= userId %>">
                     <input type="hidden" name="role" value="<%= role %>">
